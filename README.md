@@ -53,7 +53,8 @@ This portfolio site is built with:
 
 - React.js for the frontend
 - TypeScript for type-safe code
-- [Any other significant technologies or frameworks]
+- Material UI for styling
+- Vite for building the project
 
 ## Exploring the Site
 
