@@ -1,50 +1,73 @@
-# React + TypeScript + Vite
+# Welcome to My Personal Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Hello and welcome to my personal portfolio site! I'm [Your Name], a [Your Profession/Title] with a passion for [Your Key Interests/Skills]. This site showcases my professional experience, a detailed case study, and an interactive project demonstrating my technical skills.
 
-Currently, two official plugins are available:
+## Site Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+This portfolio consists of three main pages:
 
-## Expanding the ESLint configuration
+1. **Digital Resume**: An overview of my professional background, skills, and achievements.
+2. **Ivy Energy Case Study**: An in-depth look at my work experience at Ivy Energy.
+3. **Pathfinding Visualizer**: An interactive demo showcasing my programming skills.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Page Descriptions
 
-- Configure the top-level `parserOptions` property like this:
+### 1. Digital Resume
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+This page serves as a comprehensive digital resume, highlighting:
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Professional summary
+- Key skills and technologies
+- Work experience
+- Educational background
+- Notable projects and achievements
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### 2. Ivy Energy Case Study
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+A detailed exploration of my time at Ivy Energy, including:
+
+- Overview of Ivy Energy and its mission
+- My role and responsibilities
+- Key projects I worked on
+- Challenges faced and solutions implemented
+- Technologies and methodologies used
+- Outcomes and lessons learned
+
+### 3. Pathfinding Visualizer
+
+An interactive demonstration of various pathfinding algorithms, featuring:
+
+- Custom-built grid for creating mazes
+- Multiple pathfinding algorithms:
+  - Dijkstra's Algorithm
+  - A* Search
+  - Breadth-First Search (BFS)
+  - Depth-First Search (DFS)
+  - Bidirectional Search
+- Real-time visualization of algorithm execution
+- Performance metrics including execution time
+
+## Technologies Used
+
+This portfolio site is built with:
+
+- React.js for the frontend
+- TypeScript for type-safe code
+- [Any other significant technologies or frameworks]
+
+## Exploring the Site
+
+Feel free to navigate through the different pages:
+
+- Start with the Digital Resume for an overview of my professional background
+- Dive into the Ivy Energy Case Study to see an in-depth example of my work
+- Try out the Pathfinding Visualizer to interact with a live coding project
+
+## Feedback and Contact
+
+I'm always open to feedback and new opportunities. If you'd like to get in touch, please reach out via:
+
+- Email: [gavinconnorcrews@gmail.com]
+- LinkedIn: [https://www.linkedin.com/in/gavincrews/]
+
+Thank you for visiting my portfolio. I hope you enjoy exploring my work and learning more about my professional journey!
