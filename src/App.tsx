@@ -1,30 +1,46 @@
 import { Routes, Route, Link as RouterLink } from 'react-router-dom'
-import { AppBar, Toolbar, Typography, Link, Container, Box } from '@mui/material'
+import { AppBar, Toolbar, Link, Box } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { Home } from './pages/Home'
-import { IvyEnergy } from './pages/IvyEnergy'
-import { Pathfinder } from './pages/Pathfinder'
+import { CaseStudies } from './pages/CaseStudies'
+import { Visualizers } from './pages/Visualizers'
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: 'linear-gradient(145deg, #1f1f1f 0%, #121212 50%, #292929 100%)',
+}));
+
+const StyledLink = styled(Link)(({ theme }) => ({
+  color: '#FFFFFF',
+  textDecoration: 'none',
+  padding: '12px 24px',
+  borderRadius: '4px',
+  transition: 'background-color 0.3s, color 0.3s',
+  fontWeight: 'bold',
+  fontSize: '1.1rem',
+  '&:hover': {
+    backgroundColor: 'rgba(255,107,0,0.1)',
+    color: '#FF6B00',
+  },
+}));
 
 function App() {
   return (
     <>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            My Portfolio
-          </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
-            <Link component={RouterLink} to="/" color="inherit">Home</Link>
-            <Link component={RouterLink} to="/ivy" color="inherit">Ivy Energy</Link>
-            <Link component={RouterLink} to="/pathfinding" color="inherit">Pathfinding</Link>
+      <StyledAppBar position="static">
+        <Toolbar sx={{ justifyContent: 'center' }}>
+          <Box sx={{ display: 'flex', gap: 4 }}>
+            <StyledLink component={RouterLink} to="/">Home</StyledLink>
+            <StyledLink component={RouterLink} to="/case-studies">Case Studies</StyledLink>
+            <StyledLink component={RouterLink} to="/visualizers">Visualizers</StyledLink>
           </Box>
         </Toolbar>
-      </AppBar>
+      </StyledAppBar>
 
       <Box my={4} sx={{ width: '100%', padding: 2 }}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/ivy" element={<IvyEnergy />} />
-          <Route path="/pathfinding" element={<Pathfinder />} />
+          <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/visualizers" element={<Visualizers />} />
         </Routes>
       </Box>
     </>
