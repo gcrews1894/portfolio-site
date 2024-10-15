@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse } from '@mui/material';
 import { styled } from '@mui/system';
+import { Theme, useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import SecurityIcon from '@mui/icons-material/Security';
@@ -8,7 +9,7 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import { SiTypescript, SiNextdotjs, SiMui, SiDatadog } from 'react-icons/si';
 import UserfrontLogo from '../../assets/userfront.png';
 
-const TechIcon = styled(Box)(({ theme }) => ({
+const TechIcon = styled(Box)(({ theme }: { theme: Theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
   marginRight: theme.spacing(2),
@@ -18,7 +19,7 @@ const TechIcon = styled(Box)(({ theme }) => ({
   },
 }));
 
-const MetricBox = styled(Box)(({ theme }) => ({
+const MetricBox = styled(Box)(({ theme }: { theme: Theme }) => ({
   textAlign: 'center',
   padding: theme.spacing(2),
   backgroundColor: theme.palette.background.paper,
@@ -39,6 +40,7 @@ const ExpandMore = styled((props: any) => {
 
 export const ResidentPortal: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
+  const theme = useTheme();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -89,11 +91,11 @@ export const ResidentPortal: React.FC = () => {
               We used a modern tech stack that included TypeScript, Next.js, Material-UI, and Userfront for authentication. We also implemented Datadog for logging and monitoring to ensure system reliability. The project utilized the module pattern to organize code and manage complex processes such as authentication and data retrieval. This made the system modular, scalable, and easier to maintain.
             </Typography>
             <Box>
-              <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
-              <TechIcon><SiNextdotjs color="#000000" /><Typography sx={{ ml: .5 }}>Next.js</Typography></TechIcon>
-              <TechIcon><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material-UI</Typography></TechIcon>
-              <TechIcon><img src={UserfrontLogo} alt="Userfront" style={{ width: '20px', height: '20px' }} /><Typography sx={{ ml: .5 }}>Userfront</Typography></TechIcon>
-              <TechIcon><SiDatadog color="#632CA6" /><Typography sx={{ ml: .5 }}>Datadog</Typography></TechIcon>
+              <TechIcon theme={theme}><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
+              <TechIcon theme={theme}><SiNextdotjs color="#000000" /><Typography sx={{ ml: .5 }}>Next.js</Typography></TechIcon>
+              <TechIcon theme={theme}><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material-UI</Typography></TechIcon>
+              <TechIcon theme={theme}><img src={UserfrontLogo} alt="Userfront" style={{ width: '20px', height: '20px' }} /><Typography sx={{ ml: .5 }}>Userfront</Typography></TechIcon>
+              <TechIcon theme={theme}><SiDatadog color="#632CA6" /><Typography sx={{ ml: .5 }}>Datadog</Typography></TechIcon>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -127,13 +129,13 @@ export const ResidentPortal: React.FC = () => {
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <MetricBox>
+            <MetricBox theme={theme}>
               <Typography variant="h3" color="primary">30%</Typography>
               <Typography variant="subtitle1">Increase in customer satisfaction</Typography>
             </MetricBox>
           </Grid>
           <Grid item xs={12} md={6}>
-            <MetricBox>
+            <MetricBox theme={theme}>
               <Typography variant="h3" color="secondary">4 months</Typography>
               <Typography variant="subtitle1">From concept to MVP launch</Typography>
             </MetricBox>

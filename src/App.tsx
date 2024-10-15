@@ -1,15 +1,15 @@
 import { Routes, Route, Link as RouterLink } from 'react-router-dom'
-import { AppBar, Toolbar, Link, Box } from '@mui/material'
+import { AppBar, Toolbar, Box } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { Home } from './pages/Home'
 import { CaseStudies } from './pages/CaseStudies'
 import { Visualizers } from './pages/Visualizers'
 
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
+const StyledAppBar = styled(AppBar)(() => ({
   background: 'linear-gradient(145deg, #1f1f1f 0%, #121212 50%, #292929 100%)',
 }));
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(RouterLink)(() => ({
   color: '#FFFFFF',
   textDecoration: 'none',
   padding: '12px 24px',
@@ -29,9 +29,9 @@ function App() {
       <StyledAppBar position="static">
         <Toolbar sx={{ justifyContent: 'center' }}>
           <Box sx={{ display: 'flex', gap: 4 }}>
-            <StyledLink component={RouterLink} to="/">Home</StyledLink>
-            <StyledLink component={RouterLink} to="/case-studies">Case Studies</StyledLink>
-            <StyledLink component={RouterLink} to="/visualizers">Visualizers</StyledLink>
+            <StyledLink to="/">Home</StyledLink>
+            <StyledLink to="/case-studies">Case Studies</StyledLink>
+            <StyledLink to="/visualizers">Visualizers</StyledLink>
           </Box>
         </Toolbar>
       </StyledAppBar>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid, Box, Typography, Divider, Card, CardMedia, CardContent, keyframes, Paper, Tooltip } from '@mui/material';
+import { Grid, Box, Typography, Card, CardMedia, CardContent, keyframes, Paper, Tooltip } from '@mui/material';
 
 import awsLogo from '../../assets/icons8-aws-512.png'
 import reactLogo from '../../assets/icons8-react-native-512.png'

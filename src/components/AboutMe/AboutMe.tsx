@@ -12,7 +12,7 @@ const fadeIn = keyframes`
   to { opacity: 1; transform: translateY(0); }
 `;
 
-const StyledLink = styled(Link)(({ theme }) => ({
+const StyledLink = styled(Link)(() => ({
   color: '#FF6B00',
   textDecoration: 'none',
   borderRadius: '4px',

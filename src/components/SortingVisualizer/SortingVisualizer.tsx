@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button } from '@mui/material';
 
 export const SortingVisualizer: React.FC = () => {
   const [array, setArray] = useState<number[]>([]);
@@ -187,9 +187,9 @@ function getBubbleSortAnimations(array: number[]): number[][] {
   const animations: number[][] = [];
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array.length - i - 1; j++) {
-      animations.push([j, j + 1, false]);
+      animations.push([j, j + 1, 0]);
       if (array[j] > array[j + 1]) {
-        animations.push([j, j + 1, true]);
+        animations.push([j, j + 1, 1]);
         [array[j], array[j + 1]] = [array[j + 1], array[j]];
       }
     }
@@ -215,14 +215,14 @@ function partition(array: number[], low: number, high: number, animations: numbe
   const pivot = array[high];
   let i = low - 1;
   for (let j = low; j < high; j++) {
-    animations.push([j, high, false]);
+    animations.push([j, high, 0]);
     if (array[j] < pivot) {
       i++;
-      animations.push([i, j, true]);
+      animations.push([i, j, 1]);
       [array[i], array[j]] = [array[j], array[i]];
     }
   }
-  animations.push([i + 1, high, true]);
+  animations.push([i + 1, high, 1]);
   [array[i + 1], array[high]] = [array[high], array[i + 1]];
   return i + 1;
 }
@@ -232,13 +232,13 @@ function getSelectionSortAnimations(array: number[]): number[][] {
   for (let i = 0; i < array.length - 1; i++) {
     let minIdx = i;
     for (let j = i + 1; j < array.length; j++) {
-      animations.push([minIdx, j, false]);
+      animations.push([minIdx, j, 0]);
       if (array[j] < array[minIdx]) {
         minIdx = j;
       }
     }
     if (minIdx !== i) {
-      animations.push([i, minIdx, true]);
+      animations.push([i, minIdx, 1]);
       [array[i], array[minIdx]] = [array[minIdx], array[i]];
     }
   }

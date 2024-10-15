@@ -7,7 +7,7 @@ import { SortingVisualizer } from '../components/SortingVisualizer/SortingVisual
 export const Visualizers: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
   };
 
