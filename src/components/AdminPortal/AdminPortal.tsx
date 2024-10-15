@@ -74,7 +74,6 @@ const FeatureItem = ({ title, description }: { title: string, description: strin
 };
 
 export const AdminPortal: React.FC = () => {
-  const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {

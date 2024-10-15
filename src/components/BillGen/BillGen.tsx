@@ -38,7 +38,6 @@ const ExpandMore = styled((props: any) => {
 }));
 
 export const BillGen: React.FC = () => {
-  const theme = useTheme();
   const [expanded, setExpanded] = useState(false);
 
   const handleExpandClick = () => {

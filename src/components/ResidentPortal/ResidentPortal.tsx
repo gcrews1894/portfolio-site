@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse } from '@mui/material';
 import { styled } from '@mui/system';
-import { Theme } from '@mui/material';
+import { Theme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import SecurityIcon from '@mui/icons-material/Security';
@@ -9,22 +9,22 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import { SiTypescript, SiNextdotjs, SiMui, SiDatadog } from 'react-icons/si';
 import UserfrontLogo from '../../assets/userfront.png';
 
-const TechIcon = styled(Box)(({ theme }: { theme: Theme }) => ({
+const TechIcon = styled(Box)<{ theme?: Theme }>(({ theme }) => ({
   display: 'inline-flex',
   alignItems: 'center',
-  marginRight: theme.spacing(2),
+  marginRight: theme?.spacing(2),
   '& svg': {
     width: 20,
     height: 20,
   },
 }));
 
-const MetricBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+const MetricBox = styled(Box)<{ theme?: Theme }>(({ theme }) => ({
   textAlign: 'center',
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.background.paper,
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[1],
+  padding: theme?.spacing(2),
+  backgroundColor: theme?.palette.background.paper,
+  borderRadius: theme?.shape.borderRadius,
+  boxShadow: theme?.shadows[1],
 }));
 
 const ExpandMore = styled((props: any) => {
