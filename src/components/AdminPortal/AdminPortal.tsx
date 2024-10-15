@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, List, ListItem, ListItemText, Chip, IconButton, Collapse, ListItemIcon } from '@mui/material';
+import { Typography, Box, Paper, Grid, List, ListItem, ListItemText, Chip, IconButton, Collapse, ListItemIcon, Modal } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -8,6 +8,8 @@ import StorageIcon from '@mui/icons-material/Storage';
 import SpeedIcon from '@mui/icons-material/Speed';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SiReact, SiTypescript, SiNodedotjs, SiExpress, SiPostgresql, SiMui } from 'react-icons/si';
+import AdminDashboardScreenshot from '../../assets/Trellis-1.png';
+import BillingScreenshot from '../../assets/Trellis-2.png';
 
 const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
@@ -38,6 +40,41 @@ const ExpandMore = styled((props: any) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+
+const ImageWrapper = styled(Box)(() => ({
+  position: 'relative',
+  cursor: 'pointer',
+  '&:hover .overlay': {
+    opacity: 1,
+  },
+}));
+
+const ImageOverlay = styled(Box)(({ theme }) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  opacity: 0,
+  transition: 'opacity 0.3s',
+  borderRadius: theme.shape.borderRadius,
+}));
+
+const ModalImage = styled('img')({
+  maxWidth: '90%',
+  maxHeight: '90%',
+  margin: 'auto',
+  display: 'block',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  boxShadow: '0 0 24px rgba(0, 0, 0, 0.2)',
+});
 
 const FeatureItem = ({ title, description }: { title: string, description: string }) => {
   const [expanded, setExpanded] = useState(false);
@@ -75,9 +112,21 @@ const FeatureItem = ({ title, description }: { title: string, description: strin
 
 export const AdminPortal: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleImageClick = (imageSrc: string) => {
+    setSelectedImage(imageSrc);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedImage(null);
   };
 
   return (
@@ -117,7 +166,7 @@ export const AdminPortal: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4, }}>
+      <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Solutions & Technologies</Typography>
         <Grid container spacing={3} alignItems="center">
           <Grid item xs={12} md={6}>
@@ -134,28 +183,43 @@ export const AdminPortal: React.FC = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            {/* Placeholder for screenshot */}
-            <Box
-              sx={{
-                bgcolor: 'grey.200',
-                height: 0,
-                paddingTop: '56.25%', // 16:9 aspect ratio
-                position: 'relative',
-                borderRadius: 1,
-                overflow: 'hidden'
-              }}
+            <ImageWrapper
+              sx={{ mb: 2 }}
+              onClick={() => handleImageClick(AdminDashboardScreenshot)}
             >
-              <Typography
+              <Box
+                component="img"
+                src={AdminDashboardScreenshot}
+                alt="Admin Portal Dashboard"
                 sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)'
+                  width: '100%',
+                  borderRadius: 1,
                 }}
-              >
-                Screenshot placeholder: Admin portal interface
-              </Typography>
-            </Box>
+              />
+              <ImageOverlay className="overlay">
+                <Typography variant="body1" color="white">
+                  Click to expand image
+                </Typography>
+              </ImageOverlay>
+            </ImageWrapper>
+            <ImageWrapper
+              onClick={() => handleImageClick(BillingScreenshot)}
+            >
+              <Box
+                component="img"
+                src={BillingScreenshot}
+                alt="Data Management Interface"
+                sx={{
+                  width: '100%',
+                  borderRadius: 1,
+                }}
+              />
+              <ImageOverlay className="overlay">
+                <Typography variant="body1" color="white">
+                  Click to expand image
+                </Typography>
+              </ImageOverlay>
+            </ImageWrapper>
           </Grid>
         </Grid>
       </Paper>
@@ -244,6 +308,14 @@ export const AdminPortal: React.FC = () => {
           </Typography>
         </Collapse>
       </Paper>
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ModalImage src={selectedImage || ''} alt="Full size screenshot" />
+      </Modal>
     </Box>
   );
 };
