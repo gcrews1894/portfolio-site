@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { Typography, Container, Box, Tabs, Tab, Paper } from '@mui/material';
 import { AdminPortal } from '../components/AdminPortal/AdminPortal';
 import { ResidentPortal } from '../components/ResidentPortal/ResidentPortal';
@@ -9,6 +9,11 @@ export const CaseStudies: React.FC = () => {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
   const [selectedTab, setSelectedTab] = useState(0);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     if (tabParam) {

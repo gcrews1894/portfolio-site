@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse } from '@mui/material';
 import { styled } from '@mui/system';
-import { Theme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import SpeedIcon from '@mui/icons-material/Speed';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import { SiReact, SiAwslambda, SiCss3 } from 'react-icons/si';
 
-const TechIcon = styled(Box)(({ theme }: { theme: Theme }) => ({
+const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
   alignItems: 'center',
-  marginRight: theme.spacing(2),
+  marginRight: useTheme().spacing(2),
   '& svg': {
     width: 20,
     height: 20,
   },
 }));
 
-const MetricBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+const MetricBox = styled(Box)(() => ({
   textAlign: 'center',
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.background.paper,
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[1],
+  padding: useTheme().spacing(2),
+  backgroundColor: useTheme().palette.background.paper,
+  borderRadius: useTheme().shape.borderRadius,
+  boxShadow: useTheme().shadows[1],
 }));
 
 const ExpandMore = styled((props: any) => {
@@ -90,9 +90,12 @@ export const BillGen: React.FC = () => {
               We addressed the dynamic content issue and reusability concerns by using a combination of the Template Method Pattern and the Children as Props pattern. This approach allowed us to structure components flexibly, ensuring that they could be easily adapted for different templates while maintaining consistency. The use of React and CSS gave us the freedom to design bills that were both functional and aesthetically pleasing, significantly improving the user experience.
             </Typography>
             <Box>
-              <TechIcon theme={theme}><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
-              <TechIcon theme={theme}><SiAwslambda color="#FF9900" /><Typography sx={{ ml: .5 }}>AWS Lambda</Typography></TechIcon>
-              <TechIcon theme={theme}><SiCss3 color="#1572B6" /><Typography sx={{ ml: .5 }}>CSS</Typography></TechIcon>
+              <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
+              <TechIcon><SiAwslambda color="#FF9900" /><Typography sx={{ ml: .5 }}>AWS Lambda</Typography></TechIcon>
+              <TechIcon>
+                <SiCss3 color="#1572B6" />
+                <Typography sx={{ ml: .5 }}>CSS</Typography>
+              </TechIcon>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -126,13 +129,13 @@ export const BillGen: React.FC = () => {
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
-            <MetricBox theme={theme}>
+            <MetricBox>
               <Typography variant="h3" color="primary">100%</Typography>
               <Typography variant="subtitle1">Faster bill generation</Typography>
             </MetricBox>
           </Grid>
           <Grid item xs={12} md={6}>
-            <MetricBox theme={theme}>
+            <MetricBox>
               <Typography variant="h3" color="secondary">2 months</Typography>
               <Typography variant="subtitle1">From concept to MVP launch</Typography>
             </MetricBox>
@@ -172,4 +175,3 @@ export const BillGen: React.FC = () => {
     </Box>
   );
 };
-

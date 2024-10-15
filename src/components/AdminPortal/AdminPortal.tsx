@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Box, Paper, Grid, List, ListItem, ListItemText, Chip, IconButton, Collapse, ListItemIcon } from '@mui/material';
 import { styled } from '@mui/system';
-import { Theme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import StorageIcon from '@mui/icons-material/Storage';
@@ -9,23 +9,23 @@ import SpeedIcon from '@mui/icons-material/Speed';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import { SiReact, SiTypescript, SiNodedotjs, SiExpress, SiPostgresql, SiMui } from 'react-icons/si';
 
-const TechIcon = styled(Box)(({ theme }: { theme: Theme }) => ({
+const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
-  marginRight: theme.spacing(2),
+  marginRight: useTheme().spacing(2),
   '& svg': {
     width: 20,
     height: 20,
   },
 }));
 
-const MetricBox = styled(Box)(({ theme }: { theme: Theme }) => ({
+const MetricBox = styled(Box)(() => ({
   textAlign: 'center',
-  padding: theme.spacing(2),
-  backgroundColor: theme.palette.background.paper,
-  borderRadius: theme.shape.borderRadius,
-  boxShadow: theme.shadows[1],
+  padding: useTheme().spacing(2),
+  backgroundColor: useTheme().palette.background.paper,
+  borderRadius: useTheme().shape.borderRadius,
+  boxShadow: useTheme().shadows[1],
 }));
 
 const ExpandMore = styled((props: any) => {
@@ -126,12 +126,12 @@ export const AdminPortal: React.FC = () => {
               We began by building the platform with vanilla React, using tools like React Table and React Hook Forms. However, we soon realized that a custom component library was not the most efficient route, so we switched to Material UI, using DataGrid Pro for data-intensive tables. Eventually, we transitioned to TypeScript to improve type safety and reduce debugging time. On the backend, we migrated the database to Postgres and used a timescale database for efficient handling of time series data.
             </Typography>
             <Box>
-              <TechIcon theme={theme}><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
-              <TechIcon theme={theme}><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
-              <TechIcon theme={theme}><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material UI</Typography></TechIcon>
-              <TechIcon theme={theme}><SiNodedotjs color="#339933" /><Typography sx={{ ml: .5 }}>Node.js</Typography></TechIcon>
-              <TechIcon theme={theme}><SiExpress color="#000000" /><Typography sx={{ ml: .5 }}>Express</Typography></TechIcon>
-              <TechIcon theme={theme}><SiPostgresql color="#336791" /><Typography sx={{ ml: .5 }}>PostgreSQL</Typography></TechIcon>
+              <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
+              <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
+              <TechIcon><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material UI</Typography></TechIcon>
+              <TechIcon><SiNodedotjs color="#339933" /><Typography sx={{ ml: .5 }}>Node.js</Typography></TechIcon>
+              <TechIcon><SiExpress color="#000000" /><Typography sx={{ ml: .5 }}>Express</Typography></TechIcon>
+              <TechIcon><SiPostgresql color="#336791" /><Typography sx={{ ml: .5 }}>PostgreSQL</Typography></TechIcon>
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
@@ -165,19 +165,19 @@ export const AdminPortal: React.FC = () => {
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
-            <MetricBox theme={theme}>
+            <MetricBox>
               <Typography variant="h3" color="primary">85%</Typography>
               <Typography variant="subtitle1">Increase in operational efficiency</Typography>
             </MetricBox>
           </Grid>
           <Grid item xs={12} md={4}>
-            <MetricBox theme={theme}>
+            <MetricBox>
               <Typography variant="h3" color="secondary">30%</Typography>
               <Typography variant="subtitle1">Improvement in data retrieval times</Typography>
             </MetricBox>
           </Grid>
           <Grid item xs={12} md={4}>
-            <MetricBox theme={theme}>
+            <MetricBox>
               <Typography variant="h3" color="success">400%</Typography>
               <Typography variant="subtitle1">Reduction in response times</Typography>
             </MetricBox>
