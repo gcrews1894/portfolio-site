@@ -26,7 +26,7 @@ const StyledLink = styled(RouterLink)(() => ({
 }));
 
 const DrawerLink = styled(RouterLink)(() => ({
-  color: '#000000',
+  color: '#FFFFFF',
   textDecoration: 'none',
   width: '100%',
   padding: '12px 24px',
@@ -35,6 +35,14 @@ const DrawerLink = styled(RouterLink)(() => ({
     color: '#FF6B00',
   },
 }));
+
+const ComingSoon = () => (
+  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+    <Typography variant="h4" color="textSecondary">
+      Coming Soon...
+    </Typography>
+  </Box>
+);
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -58,6 +66,7 @@ function App() {
     { text: 'Home', path: '/' },
     { text: 'Case Studies', path: '/case-studies' },
     { text: 'Visualizers', path: '/visualizers' },
+    { text: 'Feedback Wall', path: '/wall' }
   ];
 
   const drawerContent = (
@@ -125,6 +134,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/visualizers" element={<Visualizers />} />
+          <Route path="/wall" element={<ComingSoon />} />
         </Routes>
       </Box>
     </>
