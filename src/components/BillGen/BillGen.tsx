@@ -48,7 +48,6 @@ const ExpandMore = styled((props: any) => {
 export const BillGen: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleExpandClick = () => {

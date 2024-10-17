@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, Modal, Tooltip } from '@mui/material';
 import { styled } from '@mui/system';
-import { Theme, useTheme } from '@mui/material/styles';
+import { Theme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import SecurityIcon from '@mui/icons-material/Security';
