@@ -15,6 +15,7 @@ import billPage5 from '../../assets/Ivy-Bill-5.png';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
@@ -102,6 +103,9 @@ export const BillGen: React.FC = () => {
 
   const billImages = [billPage1, billPage2, billPage3, billPage4, billPage5];
 
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <Box my={4}>
       <Typography variant="h3" component="h2" gutterBottom>
@@ -157,7 +161,16 @@ export const BillGen: React.FC = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography variant="h6" gutterBottom>IvyBill Screenshots (click to enlarge)</Typography>
-            <ImageList sx={{ width: 'fit-content', height: 'auto' }} cols={5} gap={8}>
+            <ImageList
+              sx={{
+                width: '100%',
+                height: 'auto',
+                gridTemplateColumns: isMobile
+                  ? 'repeat(auto-fill, minmax(120px, 1fr)) !important'
+                  : 'repeat(auto-fill, minmax(150px, 1fr)) !important',
+              }}
+              gap={8}
+            >
               {billImages.map((img, index) => (
                 <ImageListItem key={index}>
                   <Tooltip title="Click to enlarge" arrow>
@@ -166,6 +179,8 @@ export const BillGen: React.FC = () => {
                       sx={{
                         position: 'relative',
                         cursor: 'pointer',
+                        width: '100%',
+                        paddingTop: '150%', // 2:3 aspect ratio
                         '&:hover': {
                           '& .MuiSvgIcon-root': { opacity: 1 },
                           '& img': { opacity: 0.7 },
@@ -177,9 +192,12 @@ export const BillGen: React.FC = () => {
                         alt={`IvyBill Page ${index + 1}`}
                         loading="lazy"
                         style={{
-                          objectFit: 'contain',
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
                           width: '100%',
-                          height: '150px',
+                          height: '100%',
+                          objectFit: 'cover',
                           backgroundColor: '#f0f0f0',
                           transition: 'opacity 0.3s',
                         }}
@@ -216,12 +234,12 @@ export const BillGen: React.FC = () => {
           top: '50%',
           left: '50%',
           transform: 'translate(-50%, -50%)',
-          width: 'auto',
-          height: '90vh',
+          width: isMobile ? '100%' : 'auto',
+          height: isMobile ? '100%' : '90vh',
           bgcolor: 'background.paper',
-          border: '2px solid #000',
+          border: isMobile ? 'none' : '2px solid #000',
           boxShadow: 24,
-          p: 4,
+          p: isMobile ? 0 : 4,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
@@ -236,17 +254,49 @@ export const BillGen: React.FC = () => {
                 style={{
                   maxWidth: '100%',
                   maxHeight: '100%',
-                  objectFit: 'contain',
+                  width: isMobile ? '100%' : 'auto',
+                  height: isMobile ? '100%' : 'auto',
+                  objectFit: isMobile ? 'contain' : 'cover',
                   display: 'block',
                 }}
               />
-              <Box sx={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)' }}>
-                <IconButton onClick={handlePrevImage} sx={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+              <Box sx={{
+                position: 'absolute',
+                left: isMobile ? 0 : 20,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                height: isMobile ? '100%' : 'auto',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <IconButton
+                  onClick={handlePrevImage}
+                  sx={{
+                    color: 'white',
+                    backgroundColor: isMobile ? 'transparent' : 'rgba(0,0,0,0.5)',
+                  }}
+                >
                   <ArrowBackIosNewIcon />
                 </IconButton>
               </Box>
-              <Box sx={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)' }}>
-                <IconButton onClick={handleNextImage} sx={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+              <Box sx={{
+                position: 'absolute',
+                right: isMobile ? 0 : 20,
+                top: '50%',
+                transform: 'translateY(-50%)',
+                backgroundColor: isMobile ? 'rgba(0,0,0,0.5)' : 'transparent',
+                height: isMobile ? '100%' : 'auto',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                <IconButton
+                  onClick={handleNextImage}
+                  sx={{
+                    color: 'white',
+                    backgroundColor: isMobile ? 'transparent' : 'rgba(0,0,0,0.5)',
+                  }}
+                >
                   <ArrowForwardIosIcon />
                 </IconButton>
               </Box>
