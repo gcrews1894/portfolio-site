@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { Typography, Container, Box, Tabs, Tab, Paper } from '@mui/material';
+import { Typography, Container, Box, Tabs, Tab, Paper, useMediaQuery, MenuItem, Select, FormControl, SelectChangeEvent } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { AdminPortal } from '../components/AdminPortal/AdminPortal';
 import { ResidentPortal } from '../components/ResidentPortal/ResidentPortal';
 import { BillGen } from '../components/BillGen/BillGen';
+
+const tabOptions = [
+  { label: 'Admin Platform', value: 0 },
+  { label: 'Resident Portal', value: 1 },
+  { label: 'PDF Bill Generation', value: 2 },
+];
 
 export const CaseStudies: React.FC = () => {
   const [searchParams] = useSearchParams();
   const tabParam = searchParams.get('tab');
   const [selectedTab, setSelectedTab] = useState(0);
   const location = useLocation();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -23,6 +32,10 @@ export const CaseStudies: React.FC = () => {
 
   const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
     setSelectedTab(newValue);
+  };
+
+  const handleSelectChange = (event: SelectChangeEvent<number>) => {
+    setSelectedTab(event.target.value as number);
   };
 
   return (
@@ -43,12 +56,32 @@ export const CaseStudies: React.FC = () => {
           </Typography>
         </Paper>
       </Box>
-      <Box>
-        <Tabs value={selectedTab} onChange={handleTabChange}>
-          <Tab label="Admin Platform" />
-          <Tab label="Resident Portal" />
-          <Tab label="PDF Bill Generation" />
-        </Tabs>
+      <Box sx={{ mb: 2 }}>
+        {isMobile ? (
+          <FormControl fullWidth>
+            <Select
+              value={selectedTab}
+              onChange={handleSelectChange}
+            >
+              {tabOptions.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            variant="fullWidth"
+            sx={{ borderBottom: 1, borderColor: 'divider' }}
+          >
+            {tabOptions.map((option) => (
+              <Tab key={option.value} label={option.label} />
+            ))}
+          </Tabs>
+        )}
       </Box>
 
       {selectedTab === 0 && <AdminPortal />}
