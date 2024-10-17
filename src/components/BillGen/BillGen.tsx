@@ -16,6 +16,7 @@ import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import CloseIcon from '@mui/icons-material/Close';
 
 const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
@@ -248,6 +249,21 @@ export const BillGen: React.FC = () => {
         }}>
           {modalOpen && (
             <>
+              {isMobile && (
+                <IconButton
+                  onClick={handleCloseModal}
+                  sx={{
+                    position: 'absolute',
+                    right: 8,
+                    top: 8,
+                    color: 'white',
+                    backgroundColor: 'rgba(0,0,0,0.5)',
+                    zIndex: 1,
+                  }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              )}
               <img
                 src={billImages[currentImageIndex]}
                 alt={`IvyBill Page ${currentImageIndex + 1}`}
