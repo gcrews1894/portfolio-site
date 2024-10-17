@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse } from '@mui/material';
+import React, { useState, useEffect } from 'react';
+import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, ImageList, ImageListItem, Modal, Tooltip } from '@mui/material';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -7,6 +7,14 @@ import CodeIcon from '@mui/icons-material/Code';
 import SpeedIcon from '@mui/icons-material/Speed';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import { SiReact, SiAwslambda, SiCss3 } from 'react-icons/si';
+import billPage1 from '../../assets/Ivy-Bill-1.png';
+import billPage2 from '../../assets/Ivy-Bill-2.png';
+import billPage3 from '../../assets/Ivy-Bill-3.png';
+import billPage4 from '../../assets/Ivy-Bill-4.png';
+import billPage5 from '../../assets/Ivy-Bill-5.png';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 
 const TechIcon = styled(Box)(() => ({
   display: 'inline-flex',
@@ -39,10 +47,61 @@ const ExpandMore = styled((props: any) => {
 
 export const BillGen: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const handleImageClick = (imageSrc: string) => {
+    const index = billImages.findIndex(img => img === imageSrc);
+    setCurrentImageIndex(index);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex > 0 ? prevIndex - 1 : billImages.length - 1
+    );
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) =>
+      prevIndex < billImages.length - 1 ? prevIndex + 1 : 0
+    );
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!modalOpen) return;
+
+      switch (event.key) {
+        case 'ArrowLeft':
+          handlePrevImage();
+          break;
+        case 'ArrowRight':
+          handleNextImage();
+          break;
+        case 'Escape':
+          handleCloseModal();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [modalOpen]);
+
+  const billImages = [billPage1, billPage2, billPage3, billPage4, billPage5];
 
   return (
     <Box my={4}>
@@ -83,12 +142,12 @@ export const BillGen: React.FC = () => {
 
       <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Solutions & Technologies</Typography>
-        <Grid container spacing={3} alignItems="center">
-          <Grid item xs={12} md={6}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
             <Typography variant="body1" paragraph>
               We addressed the dynamic content issue and reusability concerns by using a combination of the Template Method Pattern and the Children as Props pattern. This approach allowed us to structure components flexibly, ensuring that they could be easily adapted for different templates while maintaining consistency. The use of React and CSS gave us the freedom to design bills that were both functional and aesthetically pleasing, significantly improving the user experience.
             </Typography>
-            <Box>
+            <Box mb={2}>
               <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
               <TechIcon><SiAwslambda color="#FF9900" /><Typography sx={{ ml: .5 }}>AWS Lambda</Typography></TechIcon>
               <TechIcon>
@@ -97,32 +156,105 @@ export const BillGen: React.FC = () => {
               </TechIcon>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6}>
-            {/* Placeholder for screenshot */}
-            <Box
-              sx={{
-                bgcolor: 'grey.200',
-                height: 0,
-                paddingTop: '56.25%', // 16:9 aspect ratio
-                position: 'relative',
-                borderRadius: 1,
-                overflow: 'hidden'
-              }}
-            >
-              <Typography
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              >
-                Screenshot placeholder: PDF Bill Template
-              </Typography>
-            </Box>
+          <Grid item xs={12}>
+            <Typography variant="h6" gutterBottom>IvyBill Screenshots (click to enlarge)</Typography>
+            <ImageList sx={{ width: 'fit-content', height: 'auto' }} cols={5} gap={8}>
+              {billImages.map((img, index) => (
+                <ImageListItem key={index}>
+                  <Tooltip title="Click to enlarge" arrow>
+                    <Box
+                      onClick={() => handleImageClick(img)}
+                      sx={{
+                        position: 'relative',
+                        cursor: 'pointer',
+                        '&:hover': {
+                          '& .MuiSvgIcon-root': { opacity: 1 },
+                          '& img': { opacity: 0.7 },
+                        },
+                      }}
+                    >
+                      <img
+                        src={img}
+                        alt={`IvyBill Page ${index + 1}`}
+                        loading="lazy"
+                        style={{
+                          objectFit: 'contain',
+                          width: '100%',
+                          height: '150px',
+                          backgroundColor: '#f0f0f0',
+                          transition: 'opacity 0.3s',
+                        }}
+                      />
+                      <ZoomInIcon
+                        sx={{
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          opacity: 0,
+                          transition: 'opacity 0.3s',
+                          fontSize: '2rem',
+                          color: 'primary.main',
+                        }}
+                      />
+                    </Box>
+                  </Tooltip>
+                </ImageListItem>
+              ))}
+            </ImageList>
           </Grid>
         </Grid>
       </Paper>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 'auto',
+          height: '90vh',
+          bgcolor: 'background.paper',
+          border: '2px solid #000',
+          boxShadow: 24,
+          p: 4,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}>
+          {modalOpen && (
+            <>
+              <img
+                src={billImages[currentImageIndex]}
+                alt={`IvyBill Page ${currentImageIndex + 1}`}
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  objectFit: 'contain',
+                  display: 'block',
+                }}
+              />
+              <Box sx={{ position: 'absolute', left: 20, top: '50%', transform: 'translateY(-50%)' }}>
+                <IconButton onClick={handlePrevImage} sx={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                  <ArrowBackIosNewIcon />
+                </IconButton>
+              </Box>
+              <Box sx={{ position: 'absolute', right: 20, top: '50%', transform: 'translateY(-50%)' }}>
+                <IconButton onClick={handleNextImage} sx={{ color: 'white', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                  <ArrowForwardIosIcon />
+                </IconButton>
+              </Box>
+            </>
+          )}
+        </Box>
+      </Modal>
 
       <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Impact</Typography>

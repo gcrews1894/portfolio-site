@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse } from '@mui/material';
+import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, Modal, Tooltip } from '@mui/material';
 import { styled } from '@mui/system';
-import { Theme } from '@mui/material/styles';
+import { Theme, useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import SecurityIcon from '@mui/icons-material/Security';
 import SpeedIcon from '@mui/icons-material/Speed';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { SiTypescript, SiNextdotjs, SiMui, SiDatadog } from 'react-icons/si';
 import UserfrontLogo from '../../assets/userfront.png';
+import residentPortalScreenshot from '../../assets/resident-portal.png';
 
 const TechIcon = styled(Box)<{ theme?: Theme }>(({ theme }) => ({
   display: 'inline-flex',
@@ -38,11 +40,41 @@ const ExpandMore = styled((props: any) => {
   }),
 }));
 
+const ImageWrapper = styled(Box)(() => ({
+  position: 'relative',
+  cursor: 'pointer',
+  '&:hover': {
+    '& .MuiSvgIcon-root': { opacity: 1 },
+    '& img': { opacity: 0.7 },
+  },
+}));
+
+const ModalImage = styled('img')({
+  maxWidth: '90%',
+  maxHeight: '90%',
+  margin: 'auto',
+  display: 'block',
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  boxShadow: '0 0 24px rgba(0, 0, 0, 0.2)',
+});
+
 export const ResidentPortal: React.FC = () => {
   const [expanded, setExpanded] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
+  };
+
+  const handleImageClick = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -98,28 +130,34 @@ export const ResidentPortal: React.FC = () => {
             </Box>
           </Grid>
           <Grid item xs={12} md={6}>
-            {/* Placeholder for screenshot */}
-            <Box
-              sx={{
-                bgcolor: 'grey.200',
-                height: 0,
-                paddingTop: '56.25%', // 16:9 aspect ratio
-                position: 'relative',
-                borderRadius: 1,
-                overflow: 'hidden'
-              }}
-            >
-              <Typography
-                sx={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  transform: 'translate(-50%, -50%)'
-                }}
-              >
-                Screenshot placeholder: Resident Portal interface
-              </Typography>
-            </Box>
+            <Tooltip title="Click to enlarge" arrow>
+              <ImageWrapper onClick={handleImageClick}>
+                <Box
+                  component="img"
+                  src={residentPortalScreenshot}
+                  alt="Resident Portal interface"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    borderRadius: 1,
+                    transition: 'opacity 0.3s',
+                  }}
+                />
+                <ZoomInIcon
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    opacity: 0,
+                    transition: 'opacity 0.3s',
+                    fontSize: '2rem',
+                    color: 'primary.main',
+                  }}
+                />
+              </ImageWrapper>
+            </Tooltip>
           </Grid>
         </Grid>
       </Paper>
@@ -168,6 +206,15 @@ export const ResidentPortal: React.FC = () => {
           </Typography>
         </Collapse>
       </Paper>
+
+      <Modal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <ModalImage src={residentPortalScreenshot} alt="Full size Resident Portal interface" />
+      </Modal>
     </Box>
   );
 };

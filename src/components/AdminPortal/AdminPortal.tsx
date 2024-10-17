@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, List, ListItem, ListItemText, Chip, IconButton, Collapse, ListItemIcon, Modal } from '@mui/material';
+import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, Modal, Tooltip, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'; import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { styled } from '@mui/system';
 import { useTheme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -44,24 +44,10 @@ const ExpandMore = styled((props: any) => {
 const ImageWrapper = styled(Box)(() => ({
   position: 'relative',
   cursor: 'pointer',
-  '&:hover .overlay': {
-    opacity: 1,
+  '&:hover': {
+    '& .MuiSvgIcon-root': { opacity: 1 },
+    '& img': { opacity: 0.7 },
   },
-}));
-
-const ImageOverlay = styled(Box)(({ theme }) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  opacity: 0,
-  transition: 'opacity 0.3s',
-  borderRadius: theme.shape.borderRadius,
 }));
 
 const ModalImage = styled('img')({
@@ -76,7 +62,7 @@ const ModalImage = styled('img')({
   boxShadow: '0 0 24px rgba(0, 0, 0, 0.2)',
 });
 
-const FeatureItem = ({ title, description }: { title: string, description: string }) => {
+const FeatureItem: React.FC<{ title: string; description: string }> = ({ title, description }) => {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -86,17 +72,21 @@ const FeatureItem = ({ title, description }: { title: string, description: strin
       </ListItemIcon>
       <ListItemText
         primary={
-          <Typography>
-            {title}
-            <ExpandMore
-              expand={expanded}
+          <Box display="flex" alignItems="center">
+            <Typography variant="subtitle1">{title}</Typography>
+            <IconButton
+              size="small"
               onClick={() => setExpanded(!expanded)}
-              aria-expanded={expanded}
-              aria-label="show more"
+              sx={{ ml: 1 }}
             >
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </Typography>
+              <ExpandMoreIcon
+                sx={{
+                  transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.3s',
+                }}
+              />
+            </IconButton>
+          </Box>
         }
         secondary={
           <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -126,7 +116,6 @@ export const AdminPortal: React.FC = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-    setSelectedImage(null);
   };
 
   return (
@@ -168,58 +157,77 @@ export const AdminPortal: React.FC = () => {
 
       <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Solutions & Technologies</Typography>
-        <Grid container spacing={3} alignItems="center">
+        <Typography variant="body1" paragraph>
+          We used a modern tech stack that included React, TypeScript, Node.js, Express, and PostgreSQL. The frontend was built with Material-UI for consistent design and improved development speed. We implemented RESTful APIs for efficient data communication and used JWT for secure authentication.
+        </Typography>
+        <Box mb={2}>
+          <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
+          <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
+          <TechIcon><SiNodedotjs color="#339933" /><Typography sx={{ ml: .5 }}>Node.js</Typography></TechIcon>
+          <TechIcon><SiExpress color="#000000" /><Typography sx={{ ml: .5 }}>Express</Typography></TechIcon>
+          <TechIcon><SiPostgresql color="#336791" /><Typography sx={{ ml: .5 }}>PostgreSQL</Typography></TechIcon>
+          <TechIcon><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material-UI</Typography></TechIcon>
+        </Box>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Typography variant="body1" paragraph>
-              We began by building the platform with vanilla React, using tools like React Table and React Hook Forms. However, we soon realized that a custom component library was not the most efficient route, so we switched to Material UI, using DataGrid Pro for data-intensive tables. Eventually, we transitioned to TypeScript to improve type safety and reduce debugging time. On the backend, we migrated the database to Postgres and used a timescale database for efficient handling of time series data.
-            </Typography>
-            <Box>
-              <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
-              <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
-              <TechIcon><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material UI</Typography></TechIcon>
-              <TechIcon><SiNodedotjs color="#339933" /><Typography sx={{ ml: .5 }}>Node.js</Typography></TechIcon>
-              <TechIcon><SiExpress color="#000000" /><Typography sx={{ ml: .5 }}>Express</Typography></TechIcon>
-              <TechIcon><SiPostgresql color="#336791" /><Typography sx={{ ml: .5 }}>PostgreSQL</Typography></TechIcon>
-            </Box>
+            <Tooltip title="Click to enlarge" arrow>
+              <ImageWrapper onClick={() => handleImageClick(AdminDashboardScreenshot)}>
+                <Box
+                  component="img"
+                  src={AdminDashboardScreenshot}
+                  alt="Admin Portal Dashboard"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    borderRadius: 1,
+                    transition: 'opacity 0.3s',
+                  }}
+                />
+                <ZoomInIcon
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    opacity: 0,
+                    transition: 'opacity 0.3s',
+                    fontSize: '2rem',
+                    color: 'primary.main',
+                  }}
+                />
+              </ImageWrapper>
+            </Tooltip>
           </Grid>
           <Grid item xs={12} md={6}>
-            <ImageWrapper
-              sx={{ mb: 2 }}
-              onClick={() => handleImageClick(AdminDashboardScreenshot)}
-            >
-              <Box
-                component="img"
-                src={AdminDashboardScreenshot}
-                alt="Admin Portal Dashboard"
-                sx={{
-                  width: '100%',
-                  borderRadius: 1,
-                }}
-              />
-              <ImageOverlay className="overlay">
-                <Typography variant="body1" color="white">
-                  Click to expand image
-                </Typography>
-              </ImageOverlay>
-            </ImageWrapper>
-            <ImageWrapper
-              onClick={() => handleImageClick(BillingScreenshot)}
-            >
-              <Box
-                component="img"
-                src={BillingScreenshot}
-                alt="Data Management Interface"
-                sx={{
-                  width: '100%',
-                  borderRadius: 1,
-                }}
-              />
-              <ImageOverlay className="overlay">
-                <Typography variant="body1" color="white">
-                  Click to expand image
-                </Typography>
-              </ImageOverlay>
-            </ImageWrapper>
+            <Tooltip title="Click to enlarge" arrow>
+              <ImageWrapper onClick={() => handleImageClick(BillingScreenshot)}>
+                <Box
+                  component="img"
+                  src={BillingScreenshot}
+                  alt="Data Management Interface"
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    display: 'block',
+                    borderRadius: 1,
+                    transition: 'opacity 0.3s',
+                  }}
+                />
+                <ZoomInIcon
+                  sx={{
+                    position: 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    opacity: 0,
+                    transition: 'opacity 0.3s',
+                    fontSize: '2rem',
+                    color: 'primary.main',
+                  }}
+                />
+              </ImageWrapper>
+            </Tooltip>
           </Grid>
         </Grid>
       </Paper>
