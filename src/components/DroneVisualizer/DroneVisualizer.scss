@@ -1,0 +1,9 @@
+.drone-visualizer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  canvas {
+    cursor: pointer;
+  }
+} 

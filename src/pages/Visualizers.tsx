@@ -3,6 +3,7 @@ import { Typography, Container, Box, Tabs, Tab } from '@mui/material';
 
 import { PathfindingVisualizer } from '../components/PathfindingVisualizer/PathfindingVisualizer'
 import { SortingVisualizer } from '../components/SortingVisualizer/SortingVisualizer'
+import { DroneVisualizer } from '../components/DroneVisualizer/DroneVisualizer'
 
 export const Visualizers: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState(0);
@@ -17,6 +18,7 @@ export const Visualizers: React.FC = () => {
         <Tabs value={selectedTab} onChange={handleTabChange}>
           <Tab label="Pathfinding" />
           <Tab label="Sorting" />
+          <Tab label="Drone Detection" />
         </Tabs>
       </Box>
       {selectedTab === 0 && <Box my={4}>
@@ -36,6 +38,17 @@ export const Visualizers: React.FC = () => {
           This is a demo of a sorting algorithm visualizer.
         </Typography>
         <SortingVisualizer />
+      </Box>}
+      {selectedTab === 2 && <Box my={4}>
+        <Typography variant="h2" component="h1" gutterBottom>
+          Drone Detection Visualizer
+        </Typography>
+        <Typography variant="body1" paragraph>
+          This is a demo of a drone detection algorithm visualizer. The tower at (0,0) has a radar that can see drones in all directions, 
+          and a camera that sees drones in a cone of k degrees. The camera can look in any direction. 
+          The visualizer helps find the maximum number of drones the camera can see at once.
+        </Typography>
+        <DroneVisualizer />
       </Box>}
     </Container>
   );
