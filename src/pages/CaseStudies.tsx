@@ -5,17 +5,34 @@ import { useTheme } from '@mui/material/styles';
 import { AdminPortal } from '../components/AdminPortal/AdminPortal';
 import { ResidentPortal } from '../components/ResidentPortal/ResidentPortal';
 import { BillGen } from '../components/BillGen/BillGen';
+import { Pfizer } from '../components/Pfizer/Pfizer';
+import { NeuropathyApp } from '../components/NeuropathyApp/NeuropathyApp';
 
-const tabOptions = [
-  { label: 'Admin Platform', value: 0 },
-  { label: 'Resident Portal', value: 1 },
-  { label: 'PDF Bill Generation', value: 2 },
+// Company tabs
+const companyTabs = [
+  { label: 'Ivy Energy', value: 0 },
+  { label: 'Pfizer', value: 1 },
 ];
+
+// Project tabs for each company
+const projectTabs = {
+  0: [ // Ivy Energy projects
+    { label: 'Admin Platform', value: 0 },
+    { label: 'Resident Portal', value: 1 },
+    { label: 'PDF Bill Generation', value: 2 },
+  ],
+  1: [ // Pfizer projects
+    { label: 'Performance Testing', value: 0 },
+    { label: 'Neuropathy App', value: 1 },
+  ],
+};
 
 export const CaseStudies: React.FC = () => {
   const [searchParams] = useSearchParams();
-  const tabParam = searchParams.get('tab');
-  const [selectedTab, setSelectedTab] = useState(0);
+  const companyParam = searchParams.get('company');
+  const projectParam = searchParams.get('project');
+  const [selectedCompany, setSelectedCompany] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(0);
   const location = useLocation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -25,17 +42,48 @@ export const CaseStudies: React.FC = () => {
   }, [location]);
 
   useEffect(() => {
-    if (tabParam) {
-      setSelectedTab(parseInt(tabParam, 10));
+    if (companyParam) {
+      const companyValue = parseInt(companyParam, 10);
+      setSelectedCompany(companyValue);
+      
+      if (projectParam) {
+        setSelectedProject(parseInt(projectParam, 10));
+      } else {
+        setSelectedProject(0);
+      }
     }
-  }, [tabParam]);
+  }, [companyParam, projectParam]);
 
-  const handleTabChange = (_event: React.SyntheticEvent, newValue: number) => {
-    setSelectedTab(newValue);
+  const handleCompanyChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setSelectedCompany(newValue);
+    setSelectedProject(0);
   };
 
-  const handleSelectChange = (event: SelectChangeEvent<number>) => {
-    setSelectedTab(event.target.value as number);
+  const handleProjectChange = (_event: React.SyntheticEvent, newValue: number) => {
+    setSelectedProject(newValue);
+  };
+
+  const handleCompanySelectChange = (event: SelectChangeEvent<number>) => {
+    const newCompany = event.target.value as number;
+    setSelectedCompany(newCompany);
+    setSelectedProject(0);
+  };
+
+  const handleProjectSelectChange = (event: SelectChangeEvent<number>) => {
+    setSelectedProject(event.target.value as number);
+  };
+
+  // Helper function to render the appropriate component based on selected company and project
+  const renderCaseStudy = () => {
+    if (selectedCompany === 0) { // Ivy Energy
+      if (selectedProject === 0) return <AdminPortal />;
+      if (selectedProject === 1) return <ResidentPortal />;
+      if (selectedProject === 2) return <BillGen />;
+    } else if (selectedCompany === 1) { // Pfizer
+      if (selectedProject === 0) return <Pfizer />;
+      if (selectedProject === 1) return <NeuropathyApp />;
+    }
+    return null;
   };
 
   return (
@@ -56,14 +104,17 @@ export const CaseStudies: React.FC = () => {
           </Typography>
         </Paper>
       </Box>
+
+      {/* Company Tabs */}
       <Box sx={{ mb: 2 }}>
         {isMobile ? (
-          <FormControl fullWidth>
+          <FormControl fullWidth sx={{ mb: 2 }}>
+            <Typography variant="h6" gutterBottom>Company</Typography>
             <Select
-              value={selectedTab}
-              onChange={handleSelectChange}
+              value={selectedCompany}
+              onChange={handleCompanySelectChange}
             >
-              {tabOptions.map((option) => (
+              {companyTabs.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}
                 </MenuItem>
@@ -72,21 +123,50 @@ export const CaseStudies: React.FC = () => {
           </FormControl>
         ) : (
           <Tabs
-            value={selectedTab}
-            onChange={handleTabChange}
+            value={selectedCompany}
+            onChange={handleCompanyChange}
             variant="fullWidth"
-            sx={{ borderBottom: 1, borderColor: 'divider' }}
+            sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}
           >
-            {tabOptions.map((option) => (
+            {companyTabs.map((option) => (
               <Tab key={option.value} label={option.label} />
             ))}
           </Tabs>
         )}
       </Box>
 
-      {selectedTab === 0 && <AdminPortal />}
-      {selectedTab === 1 && <ResidentPortal />}
-      {selectedTab === 2 && <BillGen />}
+      {/* Project Tabs */}
+      <Box sx={{ mb: 2 }}>
+        {isMobile ? (
+          <FormControl fullWidth>
+            <Typography variant="h6" gutterBottom>Project</Typography>
+            <Select
+              value={selectedProject}
+              onChange={handleProjectSelectChange}
+            >
+              {projectTabs[selectedCompany as keyof typeof projectTabs].map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        ) : (
+          <Tabs
+            value={selectedProject}
+            onChange={handleProjectChange}
+            variant="fullWidth"
+            sx={{ borderBottom: 1, borderColor: 'divider' }}
+          >
+            {projectTabs[selectedCompany as keyof typeof projectTabs].map((option) => (
+              <Tab key={option.value} label={option.label} />
+            ))}
+          </Tabs>
+        )}
+      </Box>
+
+      {/* Render the selected case study */}
+      {renderCaseStudy()}
     </Container>
   );
 };
