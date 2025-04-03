@@ -4,10 +4,8 @@ import './DroneVisualizer.scss';
 
 type Coord = [number, number];
 
-// Empty interface is intentional as we may add props in the future
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface DroneVisualizerProps {
-}
+// Empty type is intentional as we may add props in the future
+type DroneVisualizerProps = Record<string, never>;
 
 export const DroneVisualizer: React.FC<DroneVisualizerProps> = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -17,7 +15,6 @@ export const DroneVisualizer: React.FC<DroneVisualizerProps> = () => {
   const [maxDrones, setMaxDrones] = useState<number>(0);
   const [currentAngle, setCurrentAngle] = useState<number>(0);
   const [isOptimal, setIsOptimal] = useState<boolean>(false);
-  const [optimalAngle, setOptimalAngle] = useState<number>(0);
   
   const GRID_SIZE = 400;
   const CELL_SIZE = 20;
@@ -246,7 +243,6 @@ export const DroneVisualizer: React.FC<DroneVisualizerProps> = () => {
     
     const [maxVisible, optimalAngle] = calculateMaxDrones(drones, fieldOfView);
     setMaxDrones(maxVisible);
-    setOptimalAngle(optimalAngle);
     
     // Animate the search
     let angle = 0;
