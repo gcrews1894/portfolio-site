@@ -69,15 +69,19 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   },
 }));
 
-const ExpandMore = styled((props: { expand?: boolean; onClick: () => void; 'aria-expanded': boolean; 'aria-label': string }) => {
-  const { expand, ...other } = props;
+const ExpandMore = styled((props: { 
+  expand?: boolean; 
+  onClick: () => void; 
+  'aria-expanded': boolean; 
+  'aria-label': string;
+  children?: React.ReactNode;
+}) => {
+  const { ...other } = props;
   return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+})(({ expand }) => ({
+  transform: expand ? 'rotate(180deg)' : 'rotate(0deg)',
   marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+  transition: 'transform 0.3s ease-in-out',
 }));
 
 export const BillGen: React.FC = () => {
