@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
-import { Typography, Container, Box, Tabs, Tab, Paper, useMediaQuery, MenuItem, Select, FormControl, SelectChangeEvent } from '@mui/material';
+import { Typography, Container, Box, Tabs, Tab, Paper, useMediaQuery, MenuItem, Select, FormControl, SelectChangeEvent, keyframes } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { AdminPortal } from '../components/AdminPortal/AdminPortal';
 import { ResidentPortal } from '../components/ResidentPortal/ResidentPortal';
 import { BillGen } from '../components/BillGen/BillGen';
 import { Pfizer } from '../components/Pfizer/Pfizer';
 import { NeuropathyApp } from '../components/NeuropathyApp/NeuropathyApp';
+
+const fadeIn = keyframes`
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+`;
+
+const slideIn = keyframes`
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+`;
 
 // Company tabs
 const companyTabs = [
@@ -88,11 +98,19 @@ export const CaseStudies: React.FC = () => {
 
   return (
     <Container maxWidth="xl">
-      <Box my={4}>
+      <Box my={4} sx={{ animation: `${fadeIn} 0.6s ease-out` }}>
         <Typography variant="h2" component="h1" gutterBottom>
           Case Studies
         </Typography>
-        <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.1)' }}>
+        <Paper 
+          elevation={3} 
+          sx={{ 
+            p: 3, 
+            mb: 4, 
+            backgroundColor: 'rgba(33, 150, 243, 0.05)',
+            animation: `${slideIn} 0.6s ease-out 0.2s both`,
+          }}
+        >
           <Typography variant="body1" paragraph>
             Welcome to my case studies page! Here, you'll find an in-depth look at some of the key projects I've had the opportunity to lead and contribute to. Each case study highlights the unique challenges faced, the solutions I implemented, and the measurable results achieved.
           </Typography>
@@ -106,16 +124,37 @@ export const CaseStudies: React.FC = () => {
       </Box>
 
       {/* Company Tabs */}
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ 
+        mb: 2,
+        animation: `${slideIn} 0.6s ease-out 0.4s both`,
+      }}>
         {isMobile ? (
-          <FormControl fullWidth sx={{ mb: 2 }}>
+          <FormControl fullWidth sx={{ 
+            mb: 2,
+            '& .MuiSelect-select': {
+              transition: 'all 0.3s ease-in-out',
+              '&:hover': {
+                backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              },
+            },
+          }}>
             <Typography variant="h6" gutterBottom>Company</Typography>
             <Select
               value={selectedCompany}
               onChange={handleCompanySelectChange}
             >
               {companyTabs.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem 
+                  key={option.value} 
+                  value={option.value}
+                  sx={{
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                      transform: 'translateX(4px)',
+                    },
+                  }}
+                >
                   {option.label}
                 </MenuItem>
               ))}
@@ -126,7 +165,39 @@ export const CaseStudies: React.FC = () => {
             value={selectedCompany}
             onChange={handleCompanyChange}
             variant="fullWidth"
-            sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}
+            sx={{
+              borderBottom: 1,
+              borderColor: 'divider',
+              mb: 2,
+              '& .MuiTab-root': {
+                transition: 'all 0.3s ease-in-out',
+                position: 'relative',
+                overflow: 'hidden',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  width: '0%',
+                  height: '3px',
+                  backgroundColor: '#2196F3',
+                  transition: 'all 0.3s ease-in-out',
+                  transform: 'translateX(-50%)',
+                },
+                '&:hover': {
+                  color: '#2196F3',
+                  '&::before': {
+                    width: '100%',
+                  },
+                },
+                '&.Mui-selected': {
+                  color: '#2196F3',
+                  '&::before': {
+                    width: '100%',
+                  },
+                },
+              },
+            }}
           >
             {companyTabs.map((option) => (
               <Tab key={option.value} label={option.label} />
@@ -136,16 +207,37 @@ export const CaseStudies: React.FC = () => {
       </Box>
 
       {/* Project Tabs */}
-      <Box sx={{ mb: 2 }}>
+      <Box sx={{ 
+        mb: 2,
+        animation: `${slideIn} 0.6s ease-out 0.6s both`,
+      }}>
         {isMobile ? (
           <FormControl fullWidth>
             <Typography variant="h6" gutterBottom>Project</Typography>
             <Select
               value={selectedProject}
               onChange={handleProjectSelectChange}
+              sx={{
+                '& .MuiSelect-select': {
+                  transition: 'all 0.3s ease-in-out',
+                  '&:hover': {
+                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                  },
+                },
+              }}
             >
               {projectTabs[selectedCompany as keyof typeof projectTabs].map((option) => (
-                <MenuItem key={option.value} value={option.value}>
+                <MenuItem 
+                  key={option.value} 
+                  value={option.value}
+                  sx={{
+                    transition: 'all 0.3s ease-in-out',
+                    '&:hover': {
+                      backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                      transform: 'translateX(4px)',
+                    },
+                  }}
+                >
                   {option.label}
                 </MenuItem>
               ))}
@@ -156,7 +248,38 @@ export const CaseStudies: React.FC = () => {
             value={selectedProject}
             onChange={handleProjectChange}
             variant="fullWidth"
-            sx={{ borderBottom: 1, borderColor: 'divider' }}
+            sx={{
+              borderBottom: 1,
+              borderColor: 'divider',
+              '& .MuiTab-root': {
+                transition: 'all 0.3s ease-in-out',
+                position: 'relative',
+                overflow: 'hidden',
+                '&::before': {
+                  content: '""',
+                  position: 'absolute',
+                  bottom: 0,
+                  left: '50%',
+                  width: '0%',
+                  height: '3px',
+                  backgroundColor: '#2196F3',
+                  transition: 'all 0.3s ease-in-out',
+                  transform: 'translateX(-50%)',
+                },
+                '&:hover': {
+                  color: '#2196F3',
+                  '&::before': {
+                    width: '100%',
+                  },
+                },
+                '&.Mui-selected': {
+                  color: '#2196F3',
+                  '&::before': {
+                    width: '100%',
+                  },
+                },
+              },
+            }}
           >
             {projectTabs[selectedCompany as keyof typeof projectTabs].map((option) => (
               <Tab key={option.value} label={option.label} />
@@ -165,8 +288,13 @@ export const CaseStudies: React.FC = () => {
         )}
       </Box>
 
-      {/* Render the selected case study */}
-      {renderCaseStudy()}
+      {/* Render the selected case study with animation */}
+      <Box sx={{ 
+        animation: `${fadeIn} 0.6s ease-out 0.8s both`,
+        opacity: 0,  // Start invisible
+      }}>
+        {renderCaseStudy()}
+      </Box>
     </Container>
   );
 };

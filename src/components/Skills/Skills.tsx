@@ -61,7 +61,7 @@ export const Skills: React.FC = () => {
     <Paper
       elevation={3}
       sx={{
-        background: 'linear-gradient(145deg, #1f1f1f 0%, #121212 50%, #292929 100%)',
+        background: 'linear-gradient(145deg, #0A1929 0%, #132F4C 50%, #1E3A5F 100%)',
         borderRadius: 4,
         overflow: 'hidden',
         position: 'relative',
@@ -69,17 +69,17 @@ export const Skills: React.FC = () => {
         p: 4,
       }}
     >
-      <Typography variant="h4" component="h2" gutterBottom fontWeight="bold" color="#FF6B00" sx={{ animation: `${fadeIn} 1s ease-out` }}>
+      <Typography variant="h4" component="h2" gutterBottom fontWeight="bold" color="#2196F3" sx={{ animation: `${fadeIn} 1s ease-out` }}>
         My Tech Stack
       </Typography>
       <Grid container spacing={4}>
         {categories.map(({ title, subtitle, color }, index) => (
           <Grid item xs={12} md={4} key={title} sx={{ animation: `${fadeIn} 1s ease-out ${index * 0.2}s both` }}>
             <Box mb={2} sx={{ background: color, borderRadius: 2, p: 2 }}>
-              <Typography variant="h5" component="h3" gutterBottom sx={{ textTransform: 'capitalize', color: '#FF6B00' }}>
+              <Typography variant="h5" component="h3" gutterBottom sx={{ textTransform: 'capitalize', color: '#2196F3' }}>
                 {title}
               </Typography>
-              <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: '#B0B0B0' }}>
+              <Typography variant="subtitle1" gutterBottom sx={{ fontStyle: 'italic', color: '#B2BAC2' }}>
                 {subtitle}
               </Typography>
               <Grid container spacing={2}>
@@ -103,10 +103,34 @@ export const Skills: React.FC = () => {
                             justifyContent: 'center',
                             transition: 'all 0.3s ease-in-out',
                             transform: hoveredTech === tech.name ? 'scale(1.05)' : 'scale(1)',
-                            boxShadow: hoveredTech === tech.name ? '0 4px 20px rgba(255,107,0,0.3)' : 'none',
+                            boxShadow: hoveredTech === tech.name ? '0 8px 24px rgba(33, 150, 243, 0.4)' : 'none',
+                            position: 'relative',
+                            overflow: 'hidden',
                             '&:hover': {
                               transform: 'scale(1.05)',
-                              boxShadow: '0 4px 20px rgba(255,107,0,0.3)',
+                              boxShadow: '0 8px 24px rgba(33, 150, 243, 0.4)',
+                              background: 'rgba(255, 255, 255, 0.08)',
+                              '&::before': {
+                                opacity: 1,
+                              },
+                              '& .tech-name': {
+                                color: '#2196F3',
+                                transform: 'translateY(-2px)',
+                              },
+                              '& .tech-image': {
+                                transform: 'scale(1.1) translateY(-2px)',
+                              },
+                            },
+                            '&::before': {
+                              content: '""',
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              right: 0,
+                              height: '2px',
+                              background: 'linear-gradient(90deg, rgba(33, 150, 243, 0) 0%, rgba(33, 150, 243, 0.8) 50%, rgba(33, 150, 243, 0) 100%)',
+                              opacity: 0,
+                              transition: 'opacity 0.3s ease-in-out',
                             },
                           }}
                           onMouseEnter={() => setHoveredTech(tech.name)}
@@ -116,15 +140,25 @@ export const Skills: React.FC = () => {
                             component="img"
                             image={tech.logo}
                             alt={`${tech.name} logo`}
+                            className="tech-image"
                             sx={{
                               width: tech.priority ? 70 : 60,
                               height: tech.priority ? 70 : 60,
                               objectFit: 'contain',
                               mt: 2,
+                              transition: 'all 0.3s ease-in-out',
                             }}
                           />
                           <CardContent>
-                            <Typography variant="body2" align="center" sx={{ color: '#FFFFFF' }}>
+                            <Typography 
+                              variant="body2" 
+                              align="center" 
+                              className="tech-name"
+                              sx={{ 
+                                color: '#FFFFFF',
+                                transition: 'all 0.3s ease-in-out',
+                              }}
+                            >
                               {tech.name}
                             </Typography>
                           </CardContent>
@@ -145,7 +179,7 @@ export const Skills: React.FC = () => {
           width: 300,
           height: 300,
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(255,107,0,0.1) 0%, rgba(255,107,0,0) 70%)',
+          background: 'radial-gradient(circle, rgba(33, 150, 243, 0.1) 0%, rgba(33, 150, 243, 0) 70%)',
           zIndex: 0,
         }}
       />

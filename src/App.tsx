@@ -8,7 +8,7 @@ import { CaseStudies } from './pages/CaseStudies';
 import { Visualizers } from './pages/Visualizers';
 
 const StyledAppBar = styled(AppBar)(() => ({
-  background: 'linear-gradient(145deg, #1f1f1f 0%, #121212 50%, #292929 100%)',
+  background: 'linear-gradient(145deg, #0A1929 0%, #132F4C 50%, #1E3A5F 100%)',
 }));
 
 const StyledLink = styled(RouterLink)(() => ({
@@ -16,12 +16,32 @@ const StyledLink = styled(RouterLink)(() => ({
   textDecoration: 'none',
   padding: '12px 24px',
   borderRadius: '4px',
-  transition: 'background-color 0.3s, color 0.3s',
+  transition: 'all 0.3s ease-in-out',
   fontWeight: 'bold',
   fontSize: '1.1rem',
+  position: 'relative',
+  display: 'inline-block',
   '&:hover': {
-    backgroundColor: 'rgba(255,107,0,0.1)',
-    color: '#FF6B00',
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+    color: '#2196F3',
+    transform: 'translateY(-2px)',
+    '&::after': {
+      transform: 'scaleX(1)',
+      opacity: 1,
+    },
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: '4px',
+    left: '24px',
+    right: '24px',
+    height: '2px',
+    backgroundColor: '#2196F3',
+    transform: 'scaleX(0)',
+    transformOrigin: 'center',
+    transition: 'all 0.3s ease-in-out',
+    opacity: 0,
   },
 }));
 
@@ -30,9 +50,11 @@ const DrawerLink = styled(RouterLink)(() => ({
   textDecoration: 'none',
   width: '100%',
   padding: '12px 24px',
+  transition: 'all 0.3s ease-in-out',
   '&:hover': {
-    backgroundColor: 'rgba(255,107,0,0.1)',
-    color: '#FF6B00',
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+    color: '#2196F3',
+    paddingLeft: '32px',
   },
 }));
 

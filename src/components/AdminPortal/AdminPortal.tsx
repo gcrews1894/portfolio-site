@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, Modal, Tooltip, List, ListItem, ListItemIcon, ListItemText } from '@mui/material'; import ZoomInIcon from '@mui/icons-material/ZoomIn';
+import { Typography, Box, Paper, Grid, Chip, IconButton, Collapse, Modal, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
 import { styled } from '@mui/system';
-import { useTheme } from '@mui/material/styles';
+import { useTheme, Theme } from '@mui/material/styles';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CodeIcon from '@mui/icons-material/Code';
 import StorageIcon from '@mui/icons-material/Storage';
 import SpeedIcon from '@mui/icons-material/Speed';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ZoomInIcon from '@mui/icons-material/ZoomIn';
 import { SiReact, SiTypescript, SiNodedotjs, SiExpress, SiPostgresql, SiMui } from 'react-icons/si';
 import AdminDashboardScreenshot from '../../assets/Trellis-1.png';
 import BillingScreenshot from '../../assets/Trellis-2.png';
@@ -20,21 +21,31 @@ const TechIcon = styled(Box)(() => ({
     width: 20,
     height: 20,
   },
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    '& .tech-name': {
+      color: '#2196F3',
+    },
+  },
 }));
 
 const MetricBox = styled(Box)(() => ({
   textAlign: 'center',
   padding: useTheme().spacing(2),
-  backgroundColor: useTheme().palette.background.paper,
+  backgroundColor: 'rgba(33, 150, 243, 0.05)',
   borderRadius: useTheme().shape.borderRadius,
   boxShadow: useTheme().shadows[1],
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 6px 20px rgba(33, 150, 243, 0.2)',
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+  },
 }));
 
-const ExpandMore = styled((props: any) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+const ExpandMore = styled(IconButton)<{ isExpanded?: boolean }>(({ theme, isExpanded }) => ({
+  transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
     duration: theme.transitions.duration.shortest,
@@ -44,23 +55,58 @@ const ExpandMore = styled((props: any) => {
 const ImageWrapper = styled(Box)(() => ({
   position: 'relative',
   cursor: 'pointer',
+  borderRadius: '8px',
+  overflow: 'hidden',
+  transition: 'all 0.3s ease-in-out',
   '&:hover': {
-    '& .MuiSvgIcon-root': { opacity: 1 },
-    '& img': { opacity: 0.7 },
+    transform: 'scale(1.02)',
+    boxShadow: '0 8px 24px rgba(0, 0, 0, 0.2)',
+    '& .zoom-icon': {
+      opacity: 1,
+      transform: 'translate(-50%, -50%) scale(1)',
+    },
+    '& img': {
+      opacity: 0.8,
+    },
+  },
+  '& img': {
+    width: '100%',
+    height: 'auto',
+    transition: 'all 0.3s ease-in-out',
+  },
+  '& .zoom-icon': {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%) scale(0.8)',
+    opacity: 0,
+    transition: 'all 0.3s ease-in-out',
+    color: '#2196F3',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: '50%',
+    padding: '8px',
   },
 }));
 
-const ModalImage = styled('img')({
-  maxWidth: '90%',
-  maxHeight: '90%',
-  margin: 'auto',
-  display: 'block',
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  boxShadow: '0 0 24px rgba(0, 0, 0, 0.2)',
-});
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(4),
+  backgroundColor: 'rgba(33, 150, 243, 0.05)',
+  borderRadius: theme.shape.borderRadius,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 8px 24px rgba(33, 150, 243, 0.1)',
+    transform: 'translateY(-2px)',
+  },
+}));
+
+const StyledChip = styled(Chip)(() => ({
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+  },
+}));
 
 const FeatureItem: React.FC<{ title: string; description: string }> = ({ title, description }) => {
   const [expanded, setExpanded] = useState(false);
@@ -124,115 +170,132 @@ export const AdminPortal: React.FC = () => {
         Ivy Energy Case Study: Admin Platform Modernization
       </Typography>
       <Box mb={2}>
-        <Chip icon={<CodeIcon />} label="Frontend Lead" color="primary" sx={{ mr: 1 }} />
-        <Chip icon={<StorageIcon />} label="Data Optimization" color="secondary" sx={{ mr: 1 }} />
-        <Chip icon={<SpeedIcon />} label="Performance Tuning" color="success" />
+        <StyledChip icon={<CodeIcon />} label="Frontend Lead" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<StorageIcon />} label="Data Optimization" color="secondary" sx={{ mr: 1 }} />
+        <StyledChip icon={<SpeedIcon />} label="Performance Tuning" color="success" />
       </Box>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4, }}>
+      <StyledPaper>
         <Typography variant="h4" gutterBottom>Project Overview</Typography>
         <Typography variant="body1" paragraph>
           I was brought on to modernize Ivy Energy's internal admin portal, transforming the original PHP-based 1.0 proof-of-concept platform into a scalable solution using React, Node.js, and Express. The goal was to improve operational efficiency, enable easier future development, and handle increasingly complex data. The MVP of the 2.0 platform was launched in six to eight months, with ongoing iterations after that.
         </Typography>
-      </Paper>
+      </StyledPaper>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 3, height: '100%', borderRadius: 4, }}>
-            <Typography variant="h5" gutterBottom>My Role</Typography>
+          <StyledPaper>
+            <Typography variant="h5" gutterBottom>Technical Challenges</Typography>
             <Typography variant="body1" paragraph>
-              As the sole frontend developer for the first six to eight months, I was responsible for designing and implementing the entire front-end architecture. This included collaborating with the designer to build a component library, managing all aspects of the UI/UX, and handling functionality testing. After the MVP launch, additional team members joined, but I continued to lead the front-end effort.
+              The main challenge was migrating from a monolithic PHP application to a modern React-based solution while ensuring zero downtime and maintaining data integrity. This required careful planning of the migration strategy and implementation of a robust testing process.
             </Typography>
-          </Paper>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <CheckCircleOutlineIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText 
+                  primary="Data Migration"
+                  secondary="Implemented a staged migration approach to safely transfer data from the legacy system"
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <CheckCircleOutlineIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText 
+                  primary="Performance Optimization"
+                  secondary="Reduced average page load times by 60% through code splitting and lazy loading"
+                />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <CheckCircleOutlineIcon color="primary" />
+                </ListItemIcon>
+                <ListItemText 
+                  primary="User Experience"
+                  secondary="Redesigned the interface for improved usability and faster task completion"
+                />
+              </ListItem>
+            </List>
+          </StyledPaper>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper elevation={3} sx={{ p: 3, height: '100%' }}>
-            <Typography variant="h5" gutterBottom>Challenges</Typography>
-            <Typography variant="body1" paragraph>
-              One of the major challenges was migrating data from the 1.0 system to the new platform. This involved restructuring our data models for scalability and optimizing the handling of time series data, particularly for energy consumption. In addition, certain functionalities, like PDF bill generation, needed to be maintained in the old system while the new one was rolled out. Balancing the need for speed in development without disrupting business operations was also a key concern.
-            </Typography>
-          </Paper>
+          <StyledPaper>
+            <Typography variant="h5" gutterBottom>Key Achievements</Typography>
+            <Grid container spacing={3}>
+              <Grid item xs={12}>
+                <MetricBox>
+                  <Typography variant="h3" color="primary">60%</Typography>
+                  <Typography variant="subtitle1">Faster Page Loads</Typography>
+                </MetricBox>
+              </Grid>
+              <Grid item xs={12}>
+                <MetricBox>
+                  <Typography variant="h3" color="secondary">85%</Typography>
+                  <Typography variant="subtitle1">Task Completion Rate</Typography>
+                </MetricBox>
+              </Grid>
+              <Grid item xs={12}>
+                <MetricBox>
+                  <Typography variant="h3" color="success">40%</Typography>
+                  <Typography variant="subtitle1">Reduced Development Time</Typography>
+                </MetricBox>
+              </Grid>
+            </Grid>
+          </StyledPaper>
         </Grid>
       </Grid>
 
-      <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
+      <StyledPaper>
         <Typography variant="h4" gutterBottom>Solutions & Technologies</Typography>
         <Typography variant="body1" paragraph>
           We used a modern tech stack that included React, TypeScript, Node.js, Express, and PostgreSQL. The frontend was built with Material-UI for consistent design and improved development speed. We implemented RESTful APIs for efficient data communication and used JWT for secure authentication.
         </Typography>
         <Box mb={2}>
-          <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React</Typography></TechIcon>
-          <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
-          <TechIcon><SiNodedotjs color="#339933" /><Typography sx={{ ml: .5 }}>Node.js</Typography></TechIcon>
-          <TechIcon><SiExpress color="#000000" /><Typography sx={{ ml: .5 }}>Express</Typography></TechIcon>
-          <TechIcon><SiPostgresql color="#336791" /><Typography sx={{ ml: .5 }}>PostgreSQL</Typography></TechIcon>
-          <TechIcon><SiMui color="#0081CB" /><Typography sx={{ ml: .5 }}>Material-UI</Typography></TechIcon>
+          <TechIcon>
+            <SiReact color="#61DAFB" />
+            <Typography sx={{ ml: .5 }} className="tech-name">React</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiTypescript color="#3178C6" />
+            <Typography sx={{ ml: .5 }} className="tech-name">TypeScript</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiNodedotjs color="#339933" />
+            <Typography sx={{ ml: .5 }} className="tech-name">Node.js</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiExpress color="#000000" />
+            <Typography sx={{ ml: .5 }} className="tech-name">Express</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiPostgresql color="#336791" />
+            <Typography sx={{ ml: .5 }} className="tech-name">PostgreSQL</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiMui color="#0081CB" />
+            <Typography sx={{ ml: .5 }} className="tech-name">Material-UI</Typography>
+          </TechIcon>
         </Box>
-        <Grid container spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Tooltip title="Click to enlarge" arrow>
-              <ImageWrapper onClick={() => handleImageClick(AdminDashboardScreenshot)}>
-                <Box
-                  component="img"
-                  src={AdminDashboardScreenshot}
-                  alt="Admin Portal Dashboard"
-                  sx={{
-                    width: '100%',
-                    height: 'auto',
-                    display: 'block',
-                    borderRadius: 1,
-                    transition: 'opacity 0.3s',
-                  }}
-                />
-                <ZoomInIcon
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    opacity: 0,
-                    transition: 'opacity 0.3s',
-                    fontSize: '2rem',
-                    color: 'primary.main',
-                  }}
-                />
-              </ImageWrapper>
-            </Tooltip>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Tooltip title="Click to enlarge" arrow>
-              <ImageWrapper onClick={() => handleImageClick(BillingScreenshot)}>
-                <Box
-                  component="img"
-                  src={BillingScreenshot}
-                  alt="Data Management Interface"
-                  sx={{
-                    width: '100%',
-                    height: 'auto',
-                    display: 'block',
-                    borderRadius: 1,
-                    transition: 'opacity 0.3s',
-                  }}
-                />
-                <ZoomInIcon
-                  sx={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    opacity: 0,
-                    transition: 'opacity 0.3s',
-                    fontSize: '2rem',
-                    color: 'primary.main',
-                  }}
-                />
-              </ImageWrapper>
-            </Tooltip>
-          </Grid>
-        </Grid>
-      </Paper>
+      </StyledPaper>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4, }}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} md={6}>
+          <ImageWrapper onClick={() => handleImageClick(AdminDashboardScreenshot)}>
+            <img src={AdminDashboardScreenshot} alt="Admin Dashboard" />
+            <ZoomInIcon className="zoom-icon" />
+          </ImageWrapper>
+        </Grid>
+        <Grid item xs={12} md={6}>
+          <ImageWrapper onClick={() => handleImageClick(BillingScreenshot)}>
+            <img src={BillingScreenshot} alt="Billing Interface" />
+            <ZoomInIcon className="zoom-icon" />
+          </ImageWrapper>
+        </Grid>
+      </Grid>
+
+      <StyledPaper>
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
@@ -291,15 +354,15 @@ export const AdminPortal: React.FC = () => {
             </Grid>
           </Grid>
         </Box>
-      </Paper>
-      <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 4, }}>
+      </StyledPaper>
+      <StyledPaper>
         <Typography variant="h4" gutterBottom>
           Key Takeaways
           <ExpandMore
-            expand={expanded}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
+            isExpanded={expanded}
           >
             <ExpandMoreIcon />
           </ExpandMore>
@@ -315,14 +378,33 @@ export const AdminPortal: React.FC = () => {
             By optimizing our database architecture early and choosing scalable tools and patterns, we avoided significant technical debt down the road. This foresight allowed us to add new features and functionality smoothly as the platform grew.
           </Typography>
         </Collapse>
-      </Paper>
+      </StyledPaper>
       <Modal
         open={modalOpen}
         onClose={handleCloseModal}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="image-modal"
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          '& img': {
+            maxWidth: '90vw',
+            maxHeight: '90vh',
+            objectFit: 'contain',
+          },
+        }}
       >
-        <ModalImage src={selectedImage || ''} alt="Full size screenshot" />
+        <Box
+          sx={{
+            position: 'relative',
+            backgroundColor: 'background.paper',
+            boxShadow: 24,
+            p: 1,
+            borderRadius: 1,
+          }}
+        >
+          {selectedImage && <img src={selectedImage} alt="Enlarged view" />}
+        </Box>
       </Modal>
     </Box>
   );

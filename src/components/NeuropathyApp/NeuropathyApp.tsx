@@ -18,6 +18,13 @@ const TechIcon = styled(Box)(() => ({
     width: 20,
     height: 20,
   },
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    '& .tech-name': {
+      color: '#2196F3',
+    },
+  },
 }));
 
 const ExpandMore = styled(IconButton)(() => ({
@@ -26,6 +33,39 @@ const ExpandMore = styled(IconButton)(() => ({
   transition: 'transform 0.3s',
   '&.expanded': {
     transform: 'rotate(180deg)',
+  },
+}));
+
+const StyledChip = styled(Chip)(() => ({
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+  },
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(4),
+  backgroundColor: 'rgba(33, 150, 243, 0.05)',
+  borderRadius: theme.shape.borderRadius,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 8px 24px rgba(33, 150, 243, 0.1)',
+    transform: 'translateY(-2px)',
+  },
+}));
+
+const FeaturePaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(2),
+  height: '100%',
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 6px 20px rgba(33, 150, 243, 0.15)',
+    '& .MuiTypography-h6': {
+      color: theme.palette.primary.main,
+    },
   },
 }));
 
@@ -42,12 +82,12 @@ export const NeuropathyApp: React.FC = () => {
         Peripheral Neuropathy Detection App — Proof of Concept
       </Typography>
       <Box mb={2}>
-        <Chip icon={<CodeIcon />} label="Frontend Developer" color="primary" sx={{ mr: 1 }} />
-        <Chip icon={<StorageIcon />} label="Healthcare" color="secondary" sx={{ mr: 1 }} />
-        <Chip icon={<SpeedIcon />} label="Mobile Development" color="success" />
+        <StyledChip icon={<CodeIcon />} label="Frontend Developer" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<StorageIcon />} label="Healthcare" color="secondary" sx={{ mr: 1 }} />
+        <StyledChip icon={<SpeedIcon />} label="Mobile Development" color="success" />
       </Box>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4 }}>
+      <StyledPaper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Project Overview</Typography>
         <Typography variant="body1" paragraph>
           As part of an exploratory initiative at Pfizer, I collaborated on the development of a proof-of-concept mobile application designed to help doctors assess peripheral neuropathy in cancer patients. Peripheral neuropathy—often caused by chemotherapy—affects nerve function, particularly in extremities like the hands and feet. Our goal was to prototype a non-invasive, app-based tool that could offer quantifiable, trackable insights into nerve sensitivity using nothing more than a mobile device.
@@ -56,7 +96,7 @@ export const NeuropathyApp: React.FC = () => {
         <Typography variant="body1" paragraph>
           The app measured patients' sensitivity to vibration in their fingers. Users would press and hold their finger on a designated area of the screen, and the app would trigger vibrations of increasing intensity through the device's haptic motor. The user was instructed to lift their finger as soon as they could feel the vibration, at which point the app would record the elapsed time and translate it into a numeric sensitivity score. This process was repeated for all five fingers, after which the scores were displayed and stored for evaluation.
         </Typography>
-      </Paper>
+      </StyledPaper>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
@@ -118,73 +158,100 @@ export const NeuropathyApp: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Paper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
+      <StyledPaper elevation={3} sx={{ p: 3, my: 4, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Solutions & Implementation</Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+            <FeaturePaper elevation={2}>
               <Typography variant="h6" gutterBottom>Progressive Vibration Intensity</Typography>
               <Typography variant="body2" paragraph>
                 Developed a progressive vibration intensity function, allowing us to fine-tune the duration and strength ramp-up curve.
               </Typography>
-            </Paper>
+            </FeaturePaper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+            <FeaturePaper elevation={2}>
               <Typography variant="h6" gutterBottom>Precise Timing</Typography>
               <Typography variant="body2" paragraph>
                 Used debounced touch events and native gesture handling to track press and release timing with millisecond accuracy.
               </Typography>
-            </Paper>
+            </FeaturePaper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+            <FeaturePaper elevation={2}>
               <Typography variant="h6" gutterBottom>Scoring Model</Typography>
               <Typography variant="body2" paragraph>
                 Created a simple scoring model that converted time-to-response into a normalized sensitivity score for each finger.
               </Typography>
-            </Paper>
+            </FeaturePaper>
           </Grid>
           <Grid item xs={12} md={6}>
-            <Paper elevation={2} sx={{ p: 2, height: '100%' }}>
+            <FeaturePaper elevation={2}>
               <Typography variant="h6" gutterBottom>Results Display</Typography>
               <Typography variant="body2" paragraph>
                 Designed a final report screen to display all five scores in a clean, doctor-friendly format that could be referenced over time or exported for tracking patient progress.
               </Typography>
-            </Paper>
+            </FeaturePaper>
           </Grid>
         </Grid>
         <Box mb={2} mt={3}>
-          <TechIcon><SiReact color="#61DAFB" /><Typography sx={{ ml: .5 }}>React Native</Typography></TechIcon>
-          <TechIcon><SiTypescript color="#3178C6" /><Typography sx={{ ml: .5 }}>TypeScript</Typography></TechIcon>
+          <TechIcon>
+            <SiReact color="#61DAFB" />
+            <Typography className="tech-name" sx={{ ml: .5 }}>React Native</Typography>
+          </TechIcon>
+          <TechIcon>
+            <SiTypescript color="#3178C6" />
+            <Typography className="tech-name" sx={{ ml: .5 }}>TypeScript</Typography>
+          </TechIcon>
         </Box>
-      </Paper>
+      </StyledPaper>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4 }}>
+      <StyledPaper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <List>
-          <ListItem>
+          <ListItem sx={{
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'translateX(8px)',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderRadius: 1,
+            },
+          }}>
             <ListItemIcon>
               <CheckCircleOutlineIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary="The app successfully demonstrated a novel, low-cost approach to quantifying peripheral neuropathy levels using standard smartphone hardware." />
           </ListItem>
-          <ListItem>
+          <ListItem sx={{
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'translateX(8px)',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderRadius: 1,
+            },
+          }}>
             <ListItemIcon>
               <CheckCircleOutlineIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary="The proof-of-concept was presented internally as a potential tool for early detection and monitoring of neuropathy symptoms in chemotherapy patients." />
           </ListItem>
-          <ListItem>
+          <ListItem sx={{
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'translateX(8px)',
+              backgroundColor: 'rgba(33, 150, 243, 0.1)',
+              borderRadius: 1,
+            },
+          }}>
             <ListItemIcon>
               <CheckCircleOutlineIcon color="primary" />
             </ListItemIcon>
             <ListItemText primary="Helped validate the feasibility of digital tools in clinical assessment contexts, opening the door for future development and trials." />
           </ListItem>
         </List>
-      </Paper>
+      </StyledPaper>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 4 }}>
+      <StyledPaper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>
           Key Takeaways
           <ExpandMore
@@ -196,18 +263,36 @@ export const NeuropathyApp: React.FC = () => {
             <ExpandMoreIcon />
           </ExpandMore>
         </Typography>
-        <Typography variant="body1" paragraph>
+        <Typography variant="body1" paragraph sx={{
+          transition: 'all 0.3s ease-in-out',
+          '&:hover': {
+            transform: 'translateX(4px)',
+            color: 'primary.main',
+          },
+        }}>
           User-centered design is critical in healthcare applications—especially when working with vulnerable populations. Building empathy into the design process resulted in an app that was simple yet effective for its target audience.
         </Typography>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" paragraph sx={{
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'translateX(4px)',
+              color: 'primary.main',
+            },
+          }}>
             Hardware variability in mobile development must be accounted for early on—especially when sensor accuracy or haptic feedback is involved.
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1" paragraph sx={{
+            transition: 'all 0.3s ease-in-out',
+            '&:hover': {
+              transform: 'translateX(4px)',
+              color: 'primary.main',
+            },
+          }}>
             Rapid prototyping, paired with close collaboration with clinical stakeholders, made it possible to move from idea to working app in a short timeframe and deliver meaningful results.
           </Typography>
         </Collapse>
-      </Paper>
+      </StyledPaper>
     </Box>
   );
 }; 

@@ -1,0 +1,115 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# UX Improvements Tracker
+
+## Current Status
+- Overall Progress: 0%
+
+## Planned Enhancements
+
+### 1. Enhanced Hover Effects
+- Status: Pending
+- Description: Add subtle hover effects to cards and buttons, implement smooth transitions, and add micro-interactions for better user feedback.
+- Components to Update:
+  - Project cards
+  - Navigation links
+  - Buttons
+  - Tech stack chips
+
+### 2. Parallax Scrolling
+- Status: Pending
+- Description: Add subtle parallax effects to background elements and create depth with layered animations.
+- Components to Update:
+  - Introduction section
+  - About Me section
+  - Case studies background
+
+### 3. Loading States
+- Status: Pending
+- Description: Add smooth loading transitions between pages and implement skeleton loading for content.
+- Components to Update:
+  - Page transitions
+  - Content loading states
+  - Image loading
+
+### 4. Interactive Elements
+- Status: Pending
+- Description: Add hover tooltips, implement smooth scrolling, and add subtle cursor effects.
+- Components to Update:
+  - Tech stack items
+  - Project cards
+  - Navigation elements
+
+### 5. Visual Feedback
+- Status: Pending
+- Description: Add subtle shadows and glows, implement smooth color transitions, and add micro-animations for user interactions.
+- Components to Update:
+  - Cards
+  - Buttons
+  - Interactive elements
+
+### 6. Accessibility Improvements
+- Status: Pending
+- Description: Ensure keyboard accessibility, add ARIA labels, and implement focus styles.
+- Components to Update:
+  - Navigation
+  - Interactive elements
+  - Forms and buttons
+
+### 7. Performance Optimizations
+- Status: Pending
+- Description: Lazy load images and components, optimize animations, and implement code splitting.
+- Components to Update:
+  - Images
+  - Heavy components
+  - Route-based code splitting
+
+### 8. Content Enhancements
+- Status: Pending
+- Description: Add interactive elements, implement dark/light mode, and add a back to top button.
+- Components to Update:
+  - Theme toggle
+  - Back to top button
+  - Interactive sections
+
+### 9. User Engagement
+- Status: Pending
+- Description: Add scroll animations, implement a progress bar, and add interactive elements.
+- Components to Update:
+  - Scroll progress indicator
+  - Interactive elements
+  - Engagement features
+
+### 10. Design Polish
+- Status: Pending
+- Description: Use consistent spacing, implement a cohesive color scheme, and add subtle gradients.
+- Components to Update:
+  - Spacing system
+  - Color palette
+  - Visual hierarchy
+
+## Implementation Order
+1. Enhanced Hover Effects
+2. Visual Feedback
+3. Interactive Elements
+4. Parallax Scrolling
+5. Loading States
+6. Content Enhancements
+7. User Engagement
+8. Design Polish
+9. Accessibility Improvements
+10. Performance Optimizations
+
+## Notes
+- Each enhancement should be implemented one at a time
+- Test thoroughly after each implementation
+- Consider mobile responsiveness for all enhancements
+- Document any new components or utilities created
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to

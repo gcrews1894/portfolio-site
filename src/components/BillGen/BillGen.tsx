@@ -26,6 +26,13 @@ const TechIcon = styled(Box)(() => ({
     width: 20,
     height: 20,
   },
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    '& .tech-name': {
+      color: '#2196F3',
+    },
+  },
 }));
 
 const MetricBox = styled(Box)(() => ({
@@ -34,9 +41,35 @@ const MetricBox = styled(Box)(() => ({
   backgroundColor: useTheme().palette.background.paper,
   borderRadius: useTheme().shape.borderRadius,
   boxShadow: useTheme().shadows[1],
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 6px 20px rgba(33, 150, 243, 0.2)',
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+  },
 }));
 
-const ExpandMore = styled((props: any) => {
+const StyledChip = styled(Chip)(() => ({
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+  },
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(4),
+  backgroundColor: 'rgba(33, 150, 243, 0.05)',
+  borderRadius: theme.shape.borderRadius,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 8px 24px rgba(33, 150, 243, 0.1)',
+    transform: 'translateY(-2px)',
+  },
+}));
+
+const ExpandMore = styled((props: { expand?: boolean; onClick: () => void; 'aria-expanded': boolean; 'aria-label': string }) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
 })(({ theme, expand }) => ({
@@ -113,17 +146,17 @@ export const BillGen: React.FC = () => {
         Ivy Energy Case Study: PDF Bill Generation Service
       </Typography>
       <Box mb={2}>
-        <Chip icon={<CodeIcon />} label="React Development" color="primary" sx={{ mr: 1 }} />
-        <Chip icon={<SpeedIcon />} label="Performance Optimization" color="secondary" sx={{ mr: 1 }} />
-        <Chip icon={<DesignServicesIcon />} label="Template Design" color="success" />
+        <StyledChip icon={<CodeIcon />} label="React Development" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<SpeedIcon />} label="Performance Optimization" color="secondary" sx={{ mr: 1 }} />
+        <StyledChip icon={<DesignServicesIcon />} label="Template Design" color="success" />
       </Box>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4 }}>
+      <StyledPaper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Project Overview</Typography>
         <Typography variant="body1" paragraph>
           The goal of this project was to replace Ivy Energy's existing PHP-based PDF bill generation system with a more flexible, maintainable solution using React. The new service allowed us to quickly develop and deploy custom bill templates tailored to various client types, significantly improving both the design quality and efficiency of the billing process. The MVP was launched in 2 months, with additional templates added over time.
         </Typography>
-      </Paper>
+      </StyledPaper>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
@@ -181,10 +214,18 @@ export const BillGen: React.FC = () => {
                         position: 'relative',
                         cursor: 'pointer',
                         width: '100%',
-                        paddingTop: '150%', // 2:3 aspect ratio
+                        paddingTop: '150%',
+                        transition: 'all 0.3s ease-in-out',
                         '&:hover': {
-                          '& .MuiSvgIcon-root': { opacity: 1 },
-                          '& img': { opacity: 0.7 },
+                          transform: 'scale(1.02)',
+                          '& .MuiSvgIcon-root': { 
+                            opacity: 1,
+                            transform: 'translate(-50%, -50%) scale(1.1)',
+                          },
+                          '& img': { 
+                            opacity: 0.7,
+                            filter: 'brightness(0.9)',
+                          },
                         },
                       }}
                     >
@@ -200,7 +241,7 @@ export const BillGen: React.FC = () => {
                           height: '100%',
                           objectFit: 'cover',
                           backgroundColor: '#f0f0f0',
-                          transition: 'opacity 0.3s',
+                          transition: 'all 0.3s ease-in-out',
                         }}
                       />
                       <ZoomInIcon
@@ -210,9 +251,12 @@ export const BillGen: React.FC = () => {
                           left: '50%',
                           transform: 'translate(-50%, -50%)',
                           opacity: 0,
-                          transition: 'opacity 0.3s',
+                          transition: 'all 0.3s ease-in-out',
                           fontSize: '2rem',
                           color: 'primary.main',
+                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                          borderRadius: '50%',
+                          padding: '8px',
                         }}
                       />
                     </Box>
@@ -321,7 +365,7 @@ export const BillGen: React.FC = () => {
         </Box>
       </Modal>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4 }}>
         <Typography variant="h4" gutterBottom>Impact</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>

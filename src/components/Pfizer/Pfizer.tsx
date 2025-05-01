@@ -18,6 +18,13 @@ const TechIcon = styled(Box)(() => ({
     width: 20,
     height: 20,
   },
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    '& .tech-name': {
+      color: '#2196F3',
+    },
+  },
 }));
 
 const MetricBox = styled(Box)(() => ({
@@ -26,17 +33,41 @@ const MetricBox = styled(Box)(() => ({
   backgroundColor: useTheme().palette.background.paper,
   borderRadius: useTheme().shape.borderRadius,
   boxShadow: useTheme().shadows[1],
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-4px)',
+    boxShadow: '0 6px 20px rgba(33, 150, 243, 0.2)',
+    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+  },
 }));
 
-const ExpandMore = styled((props: any) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+const StyledChip = styled(Chip)(() => ({
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-2px)',
+    boxShadow: '0 4px 12px rgba(33, 150, 243, 0.2)',
+  },
+}));
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+  padding: theme.spacing(3),
+  marginBottom: theme.spacing(4),
+  backgroundColor: 'rgba(33, 150, 243, 0.05)',
+  borderRadius: theme.shape.borderRadius,
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    boxShadow: '0 8px 24px rgba(33, 150, 243, 0.1)',
+    transform: 'translateY(-2px)',
+  },
+}));
+
+const ExpandMore = styled(IconButton)(() => ({
+  transform: 'rotate(0deg)',
   marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+  transition: 'transform 0.3s',
+  '&.expanded': {
+    transform: 'rotate(180deg)',
+  },
 }));
 
 const FeatureItem: React.FC<{ title: string; description: string }> = ({ title, description }) => {
@@ -90,12 +121,12 @@ export const Pfizer: React.FC = () => {
         Pfizer Case Study: Performance Testing & System Scalability
       </Typography>
       <Box mb={2}>
-        <Chip icon={<CodeIcon />} label="Architecture Analyst" color="primary" sx={{ mr: 1 }} />
-        <Chip icon={<StorageIcon />} label="Data Scaling" color="secondary" sx={{ mr: 1 }} />
-        <Chip icon={<SpeedIcon />} label="Performance Testing" color="success" />
+        <StyledChip icon={<CodeIcon />} label="Architecture Analyst" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<StorageIcon />} label="Data Scaling" color="secondary" sx={{ mr: 1 }} />
+        <StyledChip icon={<SpeedIcon />} label="Performance Testing" color="success" />
       </Box>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4, }}>
+      <StyledPaper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4, }}>
         <Typography variant="h4" gutterBottom>Project Overview</Typography>
         <Typography variant="body1" paragraph>
           As part of my role as an Architecture Analyst at Pfizer, I led performance testing initiatives to evaluate system scalability and optimize response times under increasing data loads. The primary objective was to measure response times as we scaled from 100,000 to 1 million records in MongoDB (or DocumentDB) while ensuring the system remained performant under expected workloads.
@@ -103,7 +134,7 @@ export const Pfizer: React.FC = () => {
         <Typography variant="body1" paragraph>
           Using k6 for load generation, InfluxDB for metrics storage, and Grafana for visualization, we conducted multiple performance tests targeting key API endpoints to identify potential bottlenecks and provide recommendations for optimization.
         </Typography>
-      </Paper>
+      </StyledPaper>
 
       <Grid container spacing={4}>
         <Grid item xs={12} md={6}>
@@ -238,7 +269,7 @@ export const Pfizer: React.FC = () => {
         </Box>
       </Paper>
 
-      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(255,107,0,0.05)', borderRadius: 4, }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, backgroundColor: 'rgba(33, 150, 243, 0.05)', borderRadius: 4, }}>
         <Typography variant="h4" gutterBottom>Impact & Business Value</Typography>
         <Grid container spacing={3}>
           <Grid item xs={12} md={4}>
@@ -280,7 +311,7 @@ export const Pfizer: React.FC = () => {
         <Typography variant="h4" gutterBottom>
           Key Takeaways & Recommendations
           <ExpandMore
-            expand={expanded}
+            className={expanded ? 'expanded' : ''}
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
