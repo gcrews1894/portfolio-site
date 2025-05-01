@@ -47,8 +47,8 @@ const MetricBox = styled(Box)(() => ({
 const ExpandMore = styled(IconButton)<{ isExpanded?: boolean }>(({ theme, isExpanded }) => ({
   transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
   marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
+  transition: (theme as Theme).transitions.create('transform', {
+    duration: (theme as Theme).transitions.duration.shortest,
   }),
 }));
 
