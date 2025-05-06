@@ -6,6 +6,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Home } from './pages/Home';
 import { CaseStudies } from './pages/CaseStudies';
 import { Visualizers } from './pages/Visualizers';
+import { FeedbackPage } from './pages/FeedbackPage';
 
 const StyledAppBar = styled(AppBar)(() => ({
   background: 'linear-gradient(145deg, #0A1929 0%, #132F4C 50%, #1E3A5F 100%)',
@@ -57,14 +58,6 @@ const DrawerLink = styled(RouterLink)(() => ({
     paddingLeft: '32px',
   },
 }));
-
-const ComingSoon = () => (
-  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-    <Typography variant="h4" color="textSecondary">
-      Coming Soon...
-    </Typography>
-  </Box>
-);
 
 function App() {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -156,7 +149,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/case-studies" element={<CaseStudies />} />
           <Route path="/visualizers" element={<Visualizers />} />
-          <Route path="/wall" element={<ComingSoon />} />
+          <Route path="/wall" element={<FeedbackPage />} />
         </Routes>
       </Box>
     </>
