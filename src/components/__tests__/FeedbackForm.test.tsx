@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { FeedbackForm } from '../Feedback/FeedbackForm';
 import { supabase } from '../../lib/supabase';
-import type { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 
 // Mock supabase
 vi.mock('../../lib/supabase', () => ({
