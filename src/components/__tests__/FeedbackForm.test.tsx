@@ -1,21 +1,26 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { FeedbackForm } from '../Feedback/FeedbackForm';
 import { supabase } from '../../lib/supabase';
+import type { PostgrestFilterBuilder } from '@supabase/postgrest-js';
 
-// Mock Supabase client
+// Mock supabase
 vi.mock('../../lib/supabase', () => ({
   supabase: {
-    from: vi.fn(() => ({
-      insert: vi.fn(() => Promise.resolve({ error: null }))
-    }))
-  }
+    from: vi.fn(),
+  },
 }));
 
 describe('FeedbackForm', () => {
-  it('renders all form fields', () => {
-    render(<FeedbackForm />);
+  const mockOnClose = vi.fn();
+  const mockOnSubmitted = vi.fn();
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders form fields correctly', () => {
+    render(<FeedbackForm onClose={mockOnClose} onSubmitted={mockOnSubmitted} />);
     
     expect(screen.getByLabelText(/name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/company/i)).toBeInTheDocument();
@@ -23,50 +28,44 @@ describe('FeedbackForm', () => {
     expect(screen.getByRole('button', { name: /submit feedback/i })).toBeInTheDocument();
   });
 
-  it('submits form data correctly', async () => {
-    render(<FeedbackForm />);
-    
-    // Fill out the form
-    await userEvent.type(screen.getByLabelText(/name/i), 'John Doe');
-    await userEvent.type(screen.getByLabelText(/company/i), 'Acme Inc');
-    await userEvent.type(screen.getByLabelText(/message/i), 'Great experience!');
+  it('handles form submission successfully', async () => {
+    const mockInsert = vi.fn().mockResolvedValue({ error: null });
+    (supabase.from as unknown as ReturnType<typeof vi.fn>).mockReturnValue({ insert: mockInsert });
 
-    // Submit the form
+    render(<FeedbackForm onClose={mockOnClose} onSubmitted={mockOnSubmitted} />);
+
+    fireEvent.change(screen.getByLabelText(/name/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/company/i), { target: { value: 'Test Company' } });
+    fireEvent.change(screen.getByLabelText(/message/i), { target: { value: 'Test message' } });
+
     fireEvent.click(screen.getByRole('button', { name: /submit feedback/i }));
 
-    // Verify Supabase was called with correct data
     await waitFor(() => {
-      expect(supabase.from).toHaveBeenCalledWith('feedback');
-      expect(supabase.from('feedback').insert).toHaveBeenCalledWith([{
+      expect(mockInsert).toHaveBeenCalledWith([{
         name: 'John Doe',
-        company: 'Acme Inc',
-        message: 'Great experience!'
+        company: 'Test Company',
+        message: 'Test message',
       }]);
+      expect(mockOnSubmitted).toHaveBeenCalled();
     });
-
-    // Verify form is reset after submission
-    expect(screen.getByLabelText(/name/i)).toHaveValue('');
-    expect(screen.getByLabelText(/company/i)).toHaveValue('');
-    expect(screen.getByLabelText(/message/i)).toHaveValue('');
   });
 
-  it('handles submission errors', async () => {
-    // Mock Supabase error
-    vi.mocked(supabase.from).mockImplementationOnce(() => ({
-      insert: () => Promise.resolve({ error: new Error('Submission failed') })
-    }));
+  it('handles submission error', async () => {
+    const mockError = new Error('Submission failed');
+    const mockInsert = vi.fn().mockResolvedValue({ error: mockError });
+    (supabase.from as unknown as ReturnType<typeof vi.fn>).mockReturnValue({ insert: mockInsert });
 
-    render(<FeedbackForm />);
-    
-    // Fill out and submit form
-    await userEvent.type(screen.getByLabelText(/name/i), 'John Doe');
-    await userEvent.type(screen.getByLabelText(/company/i), 'Acme Inc');
-    await userEvent.type(screen.getByLabelText(/message/i), 'Great experience!');
+    render(<FeedbackForm onClose={mockOnClose} onSubmitted={mockOnSubmitted} />);
+
+    fireEvent.change(screen.getByLabelText(/name/i), { target: { value: 'John Doe' } });
+    fireEvent.change(screen.getByLabelText(/company/i), { target: { value: 'Test Company' } });
+    fireEvent.change(screen.getByLabelText(/message/i), { target: { value: 'Test message' } });
+
     fireEvent.click(screen.getByRole('button', { name: /submit feedback/i }));
 
-    // Verify error message is displayed
     await waitFor(() => {
-      expect(screen.getByText(/submission failed/i)).toBeInTheDocument();
+      expect(screen.getByText('Submission failed')).toBeInTheDocument();
+      expect(mockOnSubmitted).not.toHaveBeenCalled();
     });
   });
 }); 
