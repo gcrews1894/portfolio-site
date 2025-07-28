@@ -7,6 +7,7 @@ import { ResidentPortal } from '../components/ResidentPortal/ResidentPortal';
 import { BillGen } from '../components/BillGen/BillGen';
 import { Pfizer } from '../components/Pfizer/Pfizer';
 import { NeuropathyApp } from '../components/NeuropathyApp/NeuropathyApp';
+import { TwentySidedTavern } from '../components/TwentySidedTavern/TwentySidedTavern';
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -22,6 +23,7 @@ const slideIn = keyframes`
 const companyTabs = [
   { label: 'Ivy Energy', value: 0 },
   { label: 'Pfizer', value: 1 },
+  { label: 'Gamiotics', value: 2 },
 ];
 
 // Project tabs for each company
@@ -34,6 +36,9 @@ const projectTabs = {
   1: [ // Pfizer projects
     { label: 'Performance Testing', value: 0 },
     { label: 'Neuropathy App', value: 1 },
+  ],
+  2: [ // Gamiotics projects
+    { label: 'Twenty Sided Tavern', value: 0 },
   ],
 };
 
@@ -92,6 +97,8 @@ export const CaseStudies: React.FC = () => {
     } else if (selectedCompany === 1) { // Pfizer
       if (selectedProject === 0) return <Pfizer />;
       if (selectedProject === 1) return <NeuropathyApp />;
+    } else if (selectedCompany === 2) { // Gamiotics
+      if (selectedProject === 0) return <TwentySidedTavern />;
     }
     return null;
   };

@@ -113,7 +113,7 @@ export const ResidentPortal: React.FC = () => {
         Ivy Energy Case Study: Resident Portal Development
       </Typography>
       <Box mb={2}>
-        <StyledChip icon={<CodeIcon />} label="Full Stack Developer" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<CodeIcon />} label="Full Stack Developer" color="primary" sx={{ mr: 1, color: 'black' }} />
         <StyledChip icon={<SecurityIcon />} label="Authentication" color="secondary" sx={{ mr: 1 }} />
         <StyledChip icon={<SpeedIcon />} label="User Experience" color="success" />
       </Box>

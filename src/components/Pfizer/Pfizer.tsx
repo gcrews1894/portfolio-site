@@ -121,7 +121,7 @@ export const Pfizer: React.FC = () => {
         Pfizer Case Study: Performance Testing & System Scalability
       </Typography>
       <Box mb={2}>
-        <StyledChip icon={<CodeIcon />} label="Architecture Analyst" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<CodeIcon />} label="Architecture Analyst" color="primary" sx={{ mr: 1, color: 'black' }} />
         <StyledChip icon={<StorageIcon />} label="Data Scaling" color="secondary" sx={{ mr: 1 }} />
         <StyledChip icon={<SpeedIcon />} label="Performance Testing" color="success" />
       </Box>

@@ -170,7 +170,7 @@ export const AdminPortal: React.FC = () => {
         Ivy Energy Case Study: Admin Platform Modernization
       </Typography>
       <Box mb={2}>
-        <StyledChip icon={<CodeIcon />} label="Frontend Lead" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<CodeIcon />} label="Frontend Lead" color="primary" sx={{ mr: 1, color: 'black' }} />
         <StyledChip icon={<StorageIcon />} label="Data Optimization" color="secondary" sx={{ mr: 1 }} />
         <StyledChip icon={<SpeedIcon />} label="Performance Tuning" color="success" />
       </Box>

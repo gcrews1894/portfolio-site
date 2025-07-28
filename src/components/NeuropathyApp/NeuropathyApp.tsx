@@ -82,7 +82,7 @@ export const NeuropathyApp: React.FC = () => {
         Peripheral Neuropathy Detection App — Proof of Concept
       </Typography>
       <Box mb={2}>
-        <StyledChip icon={<CodeIcon />} label="Frontend Developer" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<CodeIcon />} label="Frontend Developer" color="primary" sx={{ mr: 1, color: 'black' }} />
         <StyledChip icon={<StorageIcon />} label="Healthcare" color="secondary" sx={{ mr: 1 }} />
         <StyledChip icon={<SpeedIcon />} label="Mobile Development" color="success" />
       </Box>

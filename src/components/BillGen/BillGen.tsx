@@ -150,7 +150,7 @@ export const BillGen: React.FC = () => {
         Ivy Energy Case Study: PDF Bill Generation Service
       </Typography>
       <Box mb={2}>
-        <StyledChip icon={<CodeIcon />} label="React Development" color="primary" sx={{ mr: 1 }} />
+        <StyledChip icon={<CodeIcon />} label="React Development" color="primary" sx={{ mr: 1, color: 'black' }} />
         <StyledChip icon={<SpeedIcon />} label="Performance Optimization" color="secondary" sx={{ mr: 1 }} />
         <StyledChip icon={<DesignServicesIcon />} label="Template Design" color="success" />
       </Box>
